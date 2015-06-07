@@ -1,0 +1,193 @@
+#include <stdio.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <fmod.h>
+#include <fmod_errors.h>
+
+static FMOD_SYSTEM *fmod_system;
+static FMOD_SOUND *trilha, *tonto, *action_moeda, *action_walking, *morte, *limite, *monstro;
+static FMOD_CHANNEL *trilha_channel;
+static FMOD_RESULT result;
+
+static int on = 0;
+
+void fmod_check_errors( FMOD_RESULT result )
+{
+    if ( result != FMOD_OK ) {
+        fprintf( stderr, "FMOD error! (%d) %s", result, FMOD_ErrorString( result ) );
+        exit( 1 );
+    }
+}
+
+void init_fmod()
+{
+
+    result = FMOD_System_Create( &fmod_system );
+    fmod_check_errors( result );
+
+    result = FMOD_System_Init( fmod_system, 32, FMOD_INIT_NORMAL, NULL );
+    fmod_check_errors( result );
+
+    result = FMOD_System_CreateStream( fmod_system, "Audio/trilha2.mp3", FMOD_LOOP_NORMAL, 0, &trilha  );
+    fmod_check_errors( result );
+
+    result = FMOD_System_CreateSound( fmod_system, "Audio/tonto.wav", FMOD_DEFAULT, 0, &tonto );
+    fmod_check_errors( result );
+
+    result = FMOD_System_CreateSound( fmod_system, "Audio/moeda.wav", FMOD_DEFAULT, 0, &action_moeda );
+    fmod_check_errors( result );
+
+    result = FMOD_System_CreateSound( fmod_system, "Audio/walking.mp3", FMOD_DEFAULT, 0, &action_walking );
+    fmod_check_errors( result );
+
+    result = FMOD_System_CreateSound( fmod_system, "Audio/morte.wav", FMOD_DEFAULT, 0, &morte );
+    fmod_check_errors( result );
+
+    result = FMOD_System_CreateSound( fmod_system, "Audio/limite.wav", FMOD_DEFAULT, 0, &limite );
+    fmod_check_errors( result );
+
+    result = FMOD_System_CreateSound( fmod_system, "Audio/monstro.mp3", FMOD_DEFAULT, 0, &monstro );
+    fmod_check_errors( result );
+}
+
+void play_trilha()
+{
+    result = FMOD_System_PlaySound( fmod_system, trilha, 0,0, &trilha_channel );
+    fmod_check_errors( result );
+    on = 1;
+
+    result = FMOD_Channel_SetVolume( trilha_channel, 0.4 );
+    fmod_check_errors( result );
+}
+
+void play_monstro()
+{
+    result = FMOD_System_PlaySound( fmod_system, monstro, 0 ,0 ,NULL );
+    fmod_check_errors( result );
+}
+
+void play_morte()
+{
+    result = FMOD_System_PlaySound( fmod_system, morte, 0 ,0 ,NULL );
+    fmod_check_errors( result );
+    usleep(1300000);
+}
+
+void play_limite()
+{
+    result = FMOD_System_PlaySound( fmod_system, limite, 0 ,0 ,NULL );
+    fmod_check_errors( result );
+}
+
+void play_action_moeda()
+{
+    result = FMOD_System_PlaySound( fmod_system, action_moeda, 0 ,0 ,NULL );
+    fmod_check_errors( result );
+}
+
+void play_action_walking()
+{
+    result = FMOD_System_PlaySound( fmod_system, action_walking, 0 ,0 ,0 );
+    fmod_check_errors( result );
+}
+
+/*void set_walking_volume( float v )
+{
+    result = FMOD_Channel_SetVolume( walking_channel ,v );
+    fmod_check_errors( result );
+}
+*/
+
+void play_tonto()
+{
+    result = FMOD_System_PlaySound( fmod_system, tonto, 0,0,0 );
+    fmod_check_errors( result );
+    sleep( 3 );
+}
+
+void update_audio()
+{
+    result = FMOD_System_Update( fmod_system );
+    fmod_check_errors( result );
+}
+
+void set_trilha_pause()
+{
+    if ( ! on )
+        return;
+
+    result = FMOD_Channel_SetPaused( trilha_channel, 1 );
+    fmod_check_errors( result );
+}
+
+/*
+void release_trilha()
+{
+     result = FMOD_Sound_Release( trilha );
+     fmod_check_errors( result );
+}
+
+void release_tonto()
+{
+    result = FMOD_Sound_Release( tonto );
+    fmod_check_errors( result );
+}
+
+void release_actions()
+{
+    result = FMOD_Sound_Release( action_moeda );
+    fmod_check_errors( result );
+
+    result = FMOD_Sound_Release( action_walking );
+    fmod_check_errors( result );
+}
+
+
+
+void release_system()
+{
+    result = FMOD_System_Close(fmod_system);
+    fmod_check_errors( result );
+
+    result = FMOD_System_Release(fmod_system);
+    fmod_check_errors( result );
+}
+
+*/
+
+void release_audio()
+{
+    result = FMOD_Sound_Release( trilha );
+    fmod_check_errors( result );
+
+    result = FMOD_Sound_Release( limite );
+    fmod_check_errors( result );
+
+    result = FMOD_Sound_Release( monstro );
+    fmod_check_errors( result );
+
+    result = FMOD_Sound_Release( morte );
+    fmod_check_errors( result );
+
+    result = FMOD_Sound_Release( tonto );
+    fmod_check_errors( result );
+
+    result = FMOD_Sound_Release( action_moeda );
+    fmod_check_errors( result );
+
+    result = FMOD_Sound_Release( action_walking );
+    fmod_check_errors( result );
+
+    result = FMOD_System_Close(fmod_system);
+    fmod_check_errors( result );
+
+    result = FMOD_System_Release(fmod_system);
+    fmod_check_errors( result );
+
+}
+
+
+
+
+
+

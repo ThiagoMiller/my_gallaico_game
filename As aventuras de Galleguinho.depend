@@ -1,0 +1,113 @@
+# depslib dependency file v1.0
+1432689140 source:/home/thiago/workspace/C/As aventuras de Galleguinho/getch.c
+	<stdio.h>
+	<termios.h>
+
+1432783628 source:/home/thiago/workspace/C/As aventuras de Galleguinho/hero.c
+	<stdio.h>
+	<jogo.h>
+
+1432784259 source:/home/thiago/workspace/C/As aventuras de Galleguinho/set.c
+	<stdio.h>
+	<stdlib.h>
+	<unistd.h>
+	<jogo.h>
+
+1432784387 source:/home/thiago/workspace/C/As aventuras de Galleguinho/main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<unistd.h>
+	<errno.h>
+	<pthread.h>
+	<jogo.h>
+
+1432784703 source:/home/thiago/workspace/C/As aventuras de Galleguinho/monster.c
+	<stdio.h>
+	<stdlib.h>
+	<jogo.h>
+
+1432689140 source:/home/thiago/workspace/C/As aventuras de Galleguinho (cópia)/getch.c
+	<stdio.h>
+	<termios.h>
+
+1433551134 source:/home/thiago/workspace/C/As aventuras de Galleguinho (cópia)/hero.c
+	<stdio.h>
+	<jogo.h>
+
+1433541959 source:/home/thiago/workspace/C/As aventuras de Galleguinho (cópia)/main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<unistd.h>
+	<errno.h>
+	<pthread.h>
+	<jogo.h>
+
+1433575946 source:/home/thiago/workspace/C/As aventuras de Galleguinho (cópia)/monster.c
+	<stdio.h>
+	<stdlib.h>
+	<unistd.h>
+	<time.h>
+	<jogo.h>
+
+1433543888 source:/home/thiago/workspace/C/As aventuras de Galleguinho (cópia)/set.c
+	<stdio.h>
+	<stdlib.h>
+	<unistd.h>
+	<time.h>
+	<pthread.h>
+	<jogo.h>
+
+1433575565 source:/home/thiago/workspace/C/As aventuras de Galleguinho (cópia)/audio.c
+	<stdio.h>
+	<unistd.h>
+	<stdlib.h>
+	<fmod.h>
+	<fmod_errors.h>
+
+1433580332 source:/home/thiago/workspace/C/As aventuras de Galleguinho (outra cópia)/audio.c
+	<stdio.h>
+	<unistd.h>
+	<stdlib.h>
+	<fmod.h>
+	<fmod_errors.h>
+
+1432689140 source:/home/thiago/workspace/C/As aventuras de Galleguinho (outra cópia)/getch.c
+	<stdio.h>
+	<termios.h>
+
+1433551134 source:/home/thiago/workspace/C/As aventuras de Galleguinho (outra cópia)/hero.c
+	<stdio.h>
+	<jogo.h>
+
+1433575946 source:/home/thiago/workspace/C/As aventuras de Galleguinho (outra cópia)/monster.c
+	<stdio.h>
+	<stdlib.h>
+	<unistd.h>
+	<time.h>
+	<jogo.h>
+
+1433579301 source:/home/thiago/workspace/C/As aventuras de Galleguinho (outra cópia)/set.c
+	<stdio.h>
+	<stdlib.h>
+	<unistd.h>
+	<time.h>
+	<pthread.h>
+	<jogo.h>
+
+1433579335 source:/home/thiago/workspace/C/As aventuras de Galleguinho (outra cópia)/main.c
+	<stdio.h>
+	<stdlib.h>
+	<unistd.h>
+	<jogo.h>
+
+1433579969 source:/home/thiago/workspace/C/As aventuras de Galleguinho (outra cópia)/thread.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<unistd.h>
+	<errno.h>
+	<pthread.h>
+	<jogo.h>
+
