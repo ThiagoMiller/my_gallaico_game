@@ -28,7 +28,7 @@ void init_fmod()
     result = FMOD_System_Init( fmod_system, 32, FMOD_INIT_NORMAL, NULL );
     fmod_check_errors( result );
 
-    result = FMOD_System_CreateStream( fmod_system, "Audio/trilha2.mp3", FMOD_LOOP_NORMAL, 0, &trilha  );
+    result = FMOD_System_CreateStream( fmod_system, "Audio/trilha.mp3", FMOD_LOOP_NORMAL, 0, &trilha  );
     fmod_check_errors( result );
 
     result = FMOD_System_CreateSound( fmod_system, "Audio/tonto.wav", FMOD_DEFAULT, 0, &tonto );
