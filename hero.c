@@ -1,16 +1,27 @@
 #include <stdio.h>
 #include <jogo.h>
 
-hero gallego;
+static hero gallego = { .is_dead = 0 };
 
-static void move( int *actual_row, int *actual_column  )
+pos get_hero_pos( void )
 {
-	if ( *actual_column >= 0 && *actual_column < WIDTH && *actual_row >= 0 && *actual_row < HEIGHT ) {
-        char on = get_( *actual_row, *actual_column );
+    return gallego.pos;
+}
 
-       // if ( on == COIN ) score++;
+void set_hero_pos( pos actual_pos )
+{
+    gallego.pos = actual_pos;
+}
 
-        char body = ( on == TRAP || on == MONSTER ) ? DEAD : HERO;
+static void move( pos *actual_pos )
+{
+    pos gallego_pos = get_hero_pos();
+
+	if ( actual_pos->column >= 0 && actual_pos->column < WIDTH && actual_pos->row >= 0 && actual_pos->row < HEIGHT ) {
+
+        char destiny = get_( actual_pos->row, actual_pos->column );
+        char body = ( destiny == TRAP || destiny == MONSTER ) ? DEAD : HERO;
+
 		/*if ( on == TRAP || on == MONSTER ) {
             gallego.is_dead = 1;
             move_to( &gallego.pos, actual_row, actual_column, DEAD );
@@ -19,16 +30,24 @@ static void move( int *actual_row, int *actual_column  )
 			//print_set();
 		}
             */
-        play_action_walking();
-        move_to( &gallego.pos, *actual_row, *actual_column, body );
 
+        ////////////////////////////////////
+        ///////////////////////////qqq
+        play_action_walking();
+        move_to( gallego_pos, *actual_pos, body );
+        if ( destiny == COIN ) {
+            score_up(); // colocar globsl...
+            play_action_moeda();
+        }
+
+        set_hero_pos( *actual_pos );
 
 	} else {
         play_limite();
-		*actual_column = gallego.pos.column, *actual_row = gallego.pos.row;
+		*actual_pos = gallego_pos;
 	}
 }
-
+/*
 static void _inicialize( void )
 {
     int coord[2];
@@ -42,31 +61,33 @@ static void _inicialize( void )
 
 	print_set();
 }
-
+*/
 void* handle_hero( void *a )
 {
-    _inicialize();
-    int direction, actual_column = gallego.pos.column, actual_row = gallego.pos.row;
+    //_inicialize();
+
+    pos actual_pos = get_hero_pos();
+    int direction;
     while ( ( direction = getch() ) != 'q' ) {
 
         switch( direction ) {
             case 'w' :
-                actual_row --;
+                actual_pos.row --;
                 break;
             case 's' :
-                actual_row ++;
+                actual_pos.row ++;
                 break;
             case 'a' :
-                actual_column --;
+                actual_pos.column --;
                 break;
             case 'd' :
-                actual_column ++;
+                actual_pos.column ++;
                 break;
             default :
                 continue;
         }
 
-        move( &actual_row, &actual_column );
+        move( &actual_pos );
 
     }
 

@@ -111,3 +111,47 @@
 	<pthread.h>
 	<jogo.h>
 
+1432689140 source:/home/thiago/workspace/Repositórios/my_gallaico_game/getch.c
+	<stdio.h>
+	<termios.h>
+
+1433731896 source:/home/thiago/workspace/Repositórios/my_gallaico_game/hero.c
+	<stdio.h>
+	<jogo.h>
+
+1433579335 source:/home/thiago/workspace/Repositórios/my_gallaico_game/main.c
+	<stdio.h>
+	<stdlib.h>
+	<unistd.h>
+	<jogo.h>
+
+1433732184 source:/home/thiago/workspace/Repositórios/my_gallaico_game/monster.c
+	<stdio.h>
+	<stdlib.h>
+	<unistd.h>
+	<time.h>
+	<jogo.h>
+
+1433732242 source:/home/thiago/workspace/Repositórios/my_gallaico_game/set.c
+	<stdio.h>
+	<stdlib.h>
+	<unistd.h>
+	<time.h>
+	<jogo.h>
+
+1433580576 source:/home/thiago/workspace/Repositórios/my_gallaico_game/thread.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<unistd.h>
+	<errno.h>
+	<pthread.h>
+	<jogo.h>
+
+1433669962 source:/home/thiago/workspace/Repositórios/my_gallaico_game/audio.c
+	<stdio.h>
+	<unistd.h>
+	<stdlib.h>
+	<fmod.h>
+	<fmod_errors.h>
+

@@ -9,6 +9,25 @@
 
 static game_data _for_this_match = { .score = 0 };
 
+void set_( int row, int column, char body  )
+{
+    _for_this_match.arena[ row ][ column ] = body;
+}
+
+char get_( int row, int column )
+{
+    return _for_this_match.arena[ row ][ column ];
+}
+
+void score_up( void )
+{
+    _for_this_match.score ++;
+}
+
+int get_score( void )
+{
+    return _for_this_match.score;
+}
 
 int game_over( void )
 {
@@ -18,7 +37,7 @@ int game_over( void )
 	printf( LEFT_BORDER "\033[6C" RED "  GAME OVER" RESET "\n" );
 	printf( LEFT_BORDER "\033[3C" RED "+----------------+" RESET "\n" );
 	printf( LEFT_BORDER "\033[3C" RED "     SEU TONTO   " RESET "\n" );
-	printf( LEFT_BORDER "\033[3C" RED "    PONTUAÇÃO %d " RESET "\n", _for_this_match.score );
+	printf( LEFT_BORDER "\033[3C" RED "    PONTUAÇÃO %d " RESET "\n", get_score() );
 	printf( LEFT_BORDER "\033[3C" RED "+----------------+" RESET "\n\n" );
 
     play_tonto();
@@ -66,7 +85,7 @@ void print_set( void )
 		}
 		puts("");
 	}
-	printf( "\n" LEFT_BORDER YELLOW "MOEDAS:" RESET" %d", _for_this_match.score );
+	printf( "\n" LEFT_BORDER YELLOW "MOEDAS:" RESET" %d", get_score() );
 	printf( VERTICAL_BORDER );
 
 	/*if ( gallego.is_dead || is_game_over ) {
@@ -76,37 +95,28 @@ void print_set( void )
     if ( is_dead ) game_over();
 }
 
-void set_( int row, int column, char body  )
-{
-    _for_this_match.arena[ row ][ column ] = body;
-}
 
-char get_( int row, int column )
-{
-    return _for_this_match.arena[ row ][ column ];
-}
 
 // Unificar os moves??? E os _inicialize???
-void move_to( pos *pos, int actual_row, int actual_column, char body )
+void move_to( pos old_pos, pos new_pos, char body )
 {
-    lock();
+    lock();//
 
-    set_( pos->row, pos->column, pos->on );
+    set_( old_pos.row, old_pos.column, old_pos.on );//
 
-    if ( body == MONSTER )
-        pos->on = get_( actual_row, actual_column );
-    else
-        if ( get_( actual_row, actual_column ) == COIN ) {
-            _for_this_match.score++;
-            play_action_moeda();
-        }
-    set_( actual_row, actual_column, body );
-    pos->row = actual_row, pos->column = actual_column;
+  //  if ( body == MONSTER )
+   //     pos->on = get_( actual_row, actual_column );
+   // else
+     //   if ( get_( actual_row, actual_column ) == COIN ) {
+       //     _for_this_match.score++;
+        //    play_action_moeda();
+        //}
+    set_( new_pos.row, new_pos.column, body );//
 
-    print_set();
-    update_audio();
+    print_set();//
+    update_audio();//
 
-    unlock();
+    unlock();//
 }
 
 
@@ -134,21 +144,38 @@ void raffle( int *coord )
 void build_set( void )
 {
     int coord[2];
-
 	int i, j;
+	pos actual_pos = { .on = BLOCK };
+
+	// Set arena
 	for (i=0; i < HEIGHT; i++)
 		for (j=0; j < WIDTH; j++)
 			set_( i, j, BLOCK );
 
-
+    // Set coins pos
 	for ( i = 0; i < QNT_COINS; i++ ) {
 		raffle( coord );
 		set_( coord[0], coord[1], COIN );
 	}
 
+    // set traps pos
 	for ( i = 0; i < QNT_TRAPS; i++ ) {
 		raffle( coord );
 		set_( coord[0], coord[1], TRAP );
 	}
+
+	// Set hero pos
+	raffle( coord );
+	set_( coord[0], coord[1], HERO );
+	actual_pos.row = coord[0], actual_pos.column = coord[1];
+    set_hero_pos( actual_pos );
+
+	// Set monster pos
+	raffle( coord );
+	set_( coord[0], coord[1], MONSTER );
+	actual_pos.row = coord[0], actual_pos.column = coord[1];
+	set_monster_pos( actual_pos );
+
+    print_set();
 }
 

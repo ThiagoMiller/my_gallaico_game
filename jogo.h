@@ -56,12 +56,17 @@ typedef struct {
 
 char getch( void );
 void resetTermios( void );
+
 char get_( int, int );
 void set_( int, int, char );
+int get_score( void );
+void score_up( void );
 void build_set( void );
-void move_to( pos *, int, int, char );
+
+void move_to( pos, pos, char );
 void raffle( int * );
 void print_set( void );
+
 void *handle_hero( void * );
 void *handle_monster( void * );
 int game_over( void );
@@ -71,6 +76,11 @@ void join_threads();
 void lock();
 void unlock();
 void release_threads();
+
+pos get_hero_pos( void );
+void set_hero_pos( pos );
+
+void set_monster_pos( pos  );
 
 void init_fmod( void );
 void play_trilha( void );
