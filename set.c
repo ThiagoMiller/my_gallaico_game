@@ -4,10 +4,9 @@
 #include <time.h>
 #include <jogo.h>
 
-//static char set[ WIDTH ][ HEIGHT ];
-//int score = 0;
 
 static game_data _for_this_match = { .score = 0 };
+
 
 void set_( int row, int column, char body  )
 {
@@ -58,17 +57,20 @@ void print_set( void )
 		inicialized++;
 	}
 */
-	printf( RESPAWN CLEAN VERTICAL_BORDER );
+	printf( CLEAN RESPAWN  VERTICAL_BORDER );
     //printf( CLEAN BEGIN VERTICAL_BORDER );
 	int i, j;
 
-	printf( LEFT_BORDER "   " );
-	for ( i = 0; i < WIDTH; i++ )
+	printf( LEFT_BORDER  );
+	/*for ( i = 0; i < WIDTH; i++ )
 		printf( "%d ", i );
+    */
+    for ( i = 0; i < WIDTH * 2 + 5 ; i++ )
+		printf( "\033[0;47m" " " RESET);
 
 	puts("");
 	for ( i = 0; i < HEIGHT; i++ ) {
-		printf( LEFT_BORDER "%d  ", i );
+		printf( LEFT_BORDER "\033[0;47m" "  " RESET " " );
 		for ( j = 0; j < WIDTH; j++ ) {
             char obj = get_( i, j );
 			switch ( obj ) {
@@ -83,8 +85,13 @@ void print_set( void )
 				default : printf( WHITE "%c " RESET, obj );
 			}
 		}
+		printf(  "\033[0;47m" "  " RESET );
 		puts("");
 	}
+    printf(  LEFT_BORDER  );
+	for ( i = 0; i < WIDTH * 2 + 5; i++ )
+		printf( "\033[0;47m" " " RESET);
+
 	printf( "\n" LEFT_BORDER YELLOW "MOEDAS:" RESET" %d", get_score() );
 	printf( VERTICAL_BORDER );
 
@@ -123,19 +130,17 @@ void move_to( pos old_pos, pos new_pos, char body )
 void raffle( int *coord )
 {
 	static int tabu[ 2 + QNT_COINS + QNT_TRAPS ][ 2 ], acm = 0;
-
-	srand(time(NULL));
+    int column_rand, row_rand, i;
 
 	NEXT_TRY: while ( 1 ) {
-		int xrand = rand() % WIDTH, yrand = rand() % HEIGHT, i;
-
+		column_rand = rand() % WIDTH, row_rand = rand() % HEIGHT;
 		for ( i = 0; i < acm; i++ ) {
-			if ( tabu[i][0] == xrand && tabu[i][1] == yrand )
+			if ( tabu[i][0] == row_rand && tabu[i][1] == column_rand )
 				goto NEXT_TRY;
 		}
 
-		tabu[ acm ][ 0 ] = xrand, tabu[ acm ][ 1 ] = yrand;
-		coord[0] = xrand, coord[1] = yrand;
+		tabu[ acm ][ 0 ] = row_rand, tabu[ acm ][ 1 ] = column_rand;
+		coord[0] = row_rand, coord[1] = column_rand;
 		break;
 	}
 	acm++;
@@ -147,16 +152,20 @@ void build_set( void )
 	int i, j;
 	pos actual_pos = { .on = BLOCK };
 
-	// Set arena
+    // para o aleatorizador
+    srand(time(NULL));
+
+	// set arena
 	for (i=0; i < HEIGHT; i++)
 		for (j=0; j < WIDTH; j++)
 			set_( i, j, BLOCK );
 
-    // Set coins pos
+    // set coins pos
 	for ( i = 0; i < QNT_COINS; i++ ) {
 		raffle( coord );
 		set_( coord[0], coord[1], COIN );
 	}
+
 
     // set traps pos
 	for ( i = 0; i < QNT_TRAPS; i++ ) {
@@ -164,18 +173,20 @@ void build_set( void )
 		set_( coord[0], coord[1], TRAP );
 	}
 
-	// Set hero pos
+	// set hero pos
 	raffle( coord );
 	set_( coord[0], coord[1], HERO );
 	actual_pos.row = coord[0], actual_pos.column = coord[1];
     set_hero_pos( actual_pos );
 
-	// Set monster pos
+	// set monster pos
 	raffle( coord );
 	set_( coord[0], coord[1], MONSTER );
 	actual_pos.row = coord[0], actual_pos.column = coord[1];
 	set_monster_pos( actual_pos );
 
+
     print_set();
+
 }
 

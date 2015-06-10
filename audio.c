@@ -60,6 +60,15 @@ void play_trilha()
     fmod_check_errors( result );
 }
 
+void set_trilha_pause()
+{
+    if ( ! on )
+        return;
+
+    result = FMOD_Channel_SetPaused( trilha_channel, 1 );
+    fmod_check_errors( result );
+}
+
 void play_monstro()
 {
     result = FMOD_System_PlaySound( fmod_system, monstro, 0 ,0 ,NULL );
@@ -111,14 +120,7 @@ void update_audio()
     fmod_check_errors( result );
 }
 
-void set_trilha_pause()
-{
-    if ( ! on )
-        return;
 
-    result = FMOD_Channel_SetPaused( trilha_channel, 1 );
-    fmod_check_errors( result );
-}
 
 /*
 void release_trilha()

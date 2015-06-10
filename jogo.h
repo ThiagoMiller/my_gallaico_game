@@ -21,7 +21,7 @@
 #define BOLDMAGENTA "\033[1m\033[35m"
 #define BOLDCYAN    "\033[1m\033[36m"
 
-#define CLEAN "\033[J"
+#define CLEAN "\033[2J"
 #define BECON "\033[s"
 #define RESPAWN "\033[u"
 #define BEGIN "\033[0;0H"
@@ -32,7 +32,7 @@
 enum { BLOCK = '.', COIN = '0', HERO = 'G', DEAD = 'X', TRAP = '~', MONSTER = 'M' };
 
 typedef struct {
-    char arena[ WIDTH ][ HEIGHT ];
+    char arena[ HEIGHT ][ WIDTH ];
     unsigned int score;
 } game_data;
 
@@ -45,12 +45,12 @@ typedef struct {
 
 typedef struct {
 	pos pos;
-	int is_dead;
+	unsigned int is_dead:1;
 } hero;
 
 typedef struct {
     pos pos;
-	int catched;
+	unsigned int catched:1;
 } monster;
 
 
