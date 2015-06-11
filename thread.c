@@ -6,7 +6,7 @@
 #include <pthread.h>
 #include <jogo.h>
 
-static pthread_t t_monster, t_hero;
+static pthread_t t_monster, t_hero, t_set, t_clock;
 static pthread_mutex_t move_lock = PTHREAD_MUTEX_INITIALIZER;
 
 
@@ -24,6 +24,12 @@ void init_threads()
 
     if ( pthread_create( &t_hero, NULL, handle_hero, NULL ) == -1 )
         error( "Can't create thread for Hero" );
+
+     if ( pthread_create( &t_set, NULL, handle_set, NULL ) == -1 )
+        error( "Can't create thread for set" );
+
+    if ( pthread_create( &t_clock, NULL, handle_time, NULL ) == -1 )
+        error( "Can't create thread for clock" );
 }
 
 void join_threads()
@@ -34,11 +40,25 @@ void join_threads()
     s = pthread_join( t_hero, &result );
     if ( s ) error( "Can't join thread for hero" );
 
-    s = pthread_cancel( t_monster );
-    if ( s ) error( "Can't stop the t_moster thread..." );
+    if ( !is_hero_dead() ) {
+        s = pthread_cancel( t_monster );
+        if ( s ) error( "Can't stop the t_moster thread..." );
+
+        s = pthread_cancel( t_set );
+        if ( s ) error( "Can't stop the t_set thread..." );
+
+        s = pthread_cancel( t_clock );
+        if ( s ) error( "Can't stop the t_clock thread..." );
+    }
 
     s = pthread_join( t_monster, &result );
     if ( s ) error( "Can't join thread for monster" );
+
+    s = pthread_join( t_set, &result );
+    if ( s ) error( "Can't join thread for t_set" );
+
+    s = pthread_join( t_clock, &result );
+    if ( s ) error( "Can't join thread for t_clock" );
 }
 
 void lock()

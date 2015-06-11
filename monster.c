@@ -7,7 +7,7 @@
 #define WAIT  1700000 // 1,7 seg
 #define DELAY 450000 // 0,45 segs
 
-static monster veiudo = { .catched = 0 };
+static monster veiudo = { .catched = 0, .wet = 0 };
 
 pos get_monster_pos( void )
 {
@@ -29,12 +29,22 @@ void monster_catched( void )
     veiudo.catched = 1;
 }
 
+int is_monster_wet( void )
+{
+    return veiudo.wet;
+}
+
 
 static void move( pos actual_pos )
 {
     pos monster_pos = get_monster_pos();
     actual_pos.on = get_( actual_pos.row, actual_pos.column );
-    char body = is_monster_catched() ? DEAD : MONSTER;
+    char body = MONSTER;
+    if ( is_monster_catched() ) {
+        body = DEAD;
+        hero_dead();
+    }
+   // char body = is_monster_catched() ? DEAD : MONSTER;
 
   /*  if ( !monster->catched ) {
         move_to( &monster->pos, actual_row, actual_column );
@@ -78,7 +88,8 @@ void* handle_monster( void *a )
 
     usleep( WAIT );
 
-	while ( 1 ) {
+	while ( !is_hero_dead() ) {
+
         pos gallego_pos = get_hero_pos(), monster_pos = get_monster_pos();
 
         if ( gallego_pos.row > monster_pos.row ) {
@@ -130,6 +141,19 @@ void* handle_monster( void *a )
 
         if ( gallego_pos.row == actual_pos.row && gallego_pos.column == actual_pos.column )
             monster_catched();
+
+        if ( get_( actual_pos.row, actual_pos.column ) == TRAP ) {
+            veiudo.wet_sec = get_sec();
+            veiudo.wet = 1;
+            int rand_sound =  rand() % 10;
+            if ( rand_sound == 9 )
+                play_wet1();
+            else if ( rand_sound == 8 )
+                play_wet2();
+        }
+
+        if ( get_sec() - veiudo.wet_sec == 2 || get_sec() - veiudo.wet_sec == -58 )
+            veiudo.wet = 0;
 
         move( actual_pos );
         usleep( DELAY );

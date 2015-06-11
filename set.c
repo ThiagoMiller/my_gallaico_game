@@ -51,6 +51,9 @@ void print_set( void )
 {
 //	static int inicialized = 0;
 	int is_dead = 0;
+	int i, j;
+	char format[9];
+	get_time_of_day( format );
 /*
 	if ( !inicialized ) {
 		printf( BECON CLEAN );
@@ -59,7 +62,8 @@ void print_set( void )
 */
 	printf( CLEAN RESPAWN  VERTICAL_BORDER );
     //printf( CLEAN BEGIN VERTICAL_BORDER );
-	int i, j;
+
+    printf( LEFT_BORDER "\033[0;44m" "TIME: %s\n\n" RESET ,format );
 
 	printf( LEFT_BORDER  );
 	/*for ( i = 0; i < WIDTH; i++ )
@@ -77,7 +81,12 @@ void print_set( void )
 				case HERO      :   printf( BOLDGREEN   "%c "   RESET, obj ); break;
 				case COIN      :   printf( BOLDYELLOW  "%c "   RESET, obj ); break;
 				case TRAP      :   printf( BOLDBLUE    "%c "   RESET, obj ); break;
-				case MONSTER   :   printf( SAGOL       "%c "   RESET, obj ); break;
+				case MONSTER   :
+                    if ( is_monster_wet() )
+                        printf( BLUE    "%c "   RESET, obj );
+                    else
+                        printf( SAGOL       "%c "   RESET, obj );
+                    break;
 				case DEAD :
 					printf( BOLDRED "%c " RESET, obj );
 					is_dead = 1;
@@ -99,8 +108,21 @@ void print_set( void )
         break;
     }
     */
+    update_audio();
     if ( is_dead ) game_over();
 }
+
+void* handle_set( void *a )
+{
+    while ( 1 ) {
+        print_set();
+        usleep( 1000000/60 );
+    }
+
+    return NULL;
+}
+
+
 
 
 
@@ -120,8 +142,8 @@ void move_to( pos old_pos, pos new_pos, char body )
         //}
     set_( new_pos.row, new_pos.column, body );//
 
-    print_set();//
-    update_audio();//
+    //print_set();//
+    //update_audio();//
 
     unlock();//
 }

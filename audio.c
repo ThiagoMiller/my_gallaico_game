@@ -5,7 +5,7 @@
 #include <fmod_errors.h>
 
 static FMOD_SYSTEM *fmod_system;
-static FMOD_SOUND *trilha, *tonto, *action_moeda, *action_walking, *morte, *limite, *monstro;
+static FMOD_SOUND *trilha, *tonto, *action_moeda, *action_walking, *morte, *limite, *monstro, *wet1, *wet2, *mancando1, *mancando2;
 static FMOD_CHANNEL *trilha_channel;
 static FMOD_RESULT result;
 
@@ -47,6 +47,18 @@ void init_fmod()
     fmod_check_errors( result );
 
     result = FMOD_System_CreateSound( fmod_system, "Audio/monstro.mp3", FMOD_DEFAULT, 0, &monstro );
+    fmod_check_errors( result );
+
+    result = FMOD_System_CreateSound( fmod_system, "Audio/wet1.wav", FMOD_DEFAULT, 0, &wet1 );
+    fmod_check_errors( result );
+
+    result = FMOD_System_CreateSound( fmod_system, "Audio/wet2.wav", FMOD_DEFAULT, 0, &wet2 );
+    fmod_check_errors( result );
+
+    result = FMOD_System_CreateSound( fmod_system, "Audio/mancando1.wav", FMOD_DEFAULT, 0, &mancando1 );
+    fmod_check_errors( result );
+
+    result = FMOD_System_CreateSound( fmod_system, "Audio/mancando2.wav", FMOD_DEFAULT, 0, &mancando2 );
     fmod_check_errors( result );
 }
 
@@ -114,6 +126,31 @@ void play_tonto()
     sleep( 3 );
 }
 
+void play_wet1()
+{
+    result = FMOD_System_PlaySound( fmod_system, wet1, 0,0,0 );
+    fmod_check_errors( result );
+}
+
+void play_wet2()
+{
+    result = FMOD_System_PlaySound( fmod_system, wet2, 0,0,0 );
+    fmod_check_errors( result );
+}
+
+void play_mancando1()
+{
+    result = FMOD_System_PlaySound( fmod_system, mancando1, 0,0,0 );
+    fmod_check_errors( result );
+}
+
+void play_mancando2()
+{
+    result = FMOD_System_PlaySound( fmod_system, mancando2, 0,0,0 );
+    fmod_check_errors( result );
+}
+
+
 void update_audio()
 {
     result = FMOD_System_Update( fmod_system );
@@ -160,6 +197,18 @@ void release_system()
 void release_audio()
 {
     result = FMOD_Sound_Release( trilha );
+    fmod_check_errors( result );
+
+    result = FMOD_Sound_Release( mancando1 );
+    fmod_check_errors( result );
+
+    result = FMOD_Sound_Release( mancando2 );
+    fmod_check_errors( result );
+
+    result = FMOD_Sound_Release( wet1 );
+    fmod_check_errors( result );
+
+    result = FMOD_Sound_Release( wet2 );
     fmod_check_errors( result );
 
     result = FMOD_Sound_Release( limite );

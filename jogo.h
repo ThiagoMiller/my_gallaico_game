@@ -2,6 +2,7 @@
 #define WIDTH 10
 #define QNT_COINS 10
 #define QNT_TRAPS 10
+#define QNT_FRUIT 3
 
 #define RESET   "\033[0m"
 #define WHITE   "\033[37m"
@@ -51,7 +52,20 @@ typedef struct {
 typedef struct {
     pos pos;
 	unsigned int catched:1;
+	unsigned int wet:1;
+	int wet_sec;
 } monster;
+
+typedef struct {
+    int hrs;
+    int min;
+    int sec;
+} clock_game;
+
+typedef struct {
+    char data[ QNT_COINS + QNT_FRUIT + QNT_TRAPS + 2 ][2];
+    int ptr;
+} lista;
 
 
 char getch( void );
@@ -69,6 +83,8 @@ void print_set( void );
 
 void *handle_hero( void * );
 void *handle_monster( void * );
+void* handle_set( void * );
+void* handle_time( void * );
 int game_over( void );
 
 void init_threads();
@@ -79,8 +95,11 @@ void release_threads();
 
 pos get_hero_pos( void );
 void set_hero_pos( pos );
+void hero_dead( void );
+int is_hero_dead(void);
 
 void set_monster_pos( pos  );
+int is_monster_wet( void );
 
 void init_fmod( void );
 void play_trilha( void );
@@ -92,12 +111,19 @@ void play_monstro();
 void set_walking_volume( float );
 void play_limite();
 void set_trilha_pause();
+void play_wet1();
+void play_wet2();
+void play_mancando1();
+void play_mancando2();
 void update_audio();
 /*void release_trilha( void );
 void release_tonto( void );
 void release_actions();
 void release_system( void );*/
 void release_audio( void );
+
+void get_time_of_day( char *);
+int get_sec( void );
 
 
 

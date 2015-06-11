@@ -39,6 +39,9 @@
 		<Unit filename="audio.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="clock.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="getch.c">
 			<Option compilerVar="CC" />
 		</Unit>
