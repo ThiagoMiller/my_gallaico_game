@@ -95,7 +95,7 @@ void print_set( void )
                         printf( SAGOL       "%c "   RESET, obj );
                     break;
 				case DEAD :
-					printf( BOLDRED "%c " RESET, obj );
+					printf(  BOLDRED "\033[43m" "%c" RESET " ", obj );
 					is_dead = 1;
 					break;
 				default : printf( WHITE "%c " RESET, obj );
@@ -162,7 +162,7 @@ void raffle( int *coord )
     int column_rand, row_rand, i;
 
 	NEXT_TRY: while ( 1 ) {
-		column_rand = rand() % WIDTH, row_rand = rand() % HEIGHT;
+		column_rand = get_rand( WIDTH ), row_rand = get_rand( HEIGHT );
 		for ( i = 0; i < acm; i++ ) {
 			if ( tabu[i][0] == row_rand && tabu[i][1] == column_rand )
 				goto NEXT_TRY;
@@ -175,14 +175,22 @@ void raffle( int *coord )
 	acm++;
 }
 
+int get_rand( int untill )
+{
+    static int inicialized = 0;
+    if ( !inicialized ) {
+        srand(time(NULL));
+        inicialized = 1;
+    }
+
+    return rand() % untill;
+}
+
 void build_set( void )
 {
     int coord[2];
 	int i, j;
 	pos actual_pos = { .on = BLOCK };
-
-    // para o aleatorizador
-    srand(time(NULL));
 
 	// set arena
 	for (i=0; i < HEIGHT; i++)
@@ -214,7 +222,7 @@ void build_set( void )
 	actual_pos.row = coord[0], actual_pos.column = coord[1];
 	set_monster_pos( actual_pos );
 
-
+    // first print
     print_set();
 
 }

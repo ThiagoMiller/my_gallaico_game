@@ -75,6 +75,7 @@ void resetTermios( void );
 
 char get_( int, int );
 void set_( int, int, char );
+int get_rand( int );
 int get_score( void );
 void score_up( void );
 void build_set( void );

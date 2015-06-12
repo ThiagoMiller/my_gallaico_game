@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <time.h>
 #include <jogo.h>
 
 #define WAIT  1700000 // 1,7 seg
@@ -14,9 +13,9 @@ pos get_monster_pos( void )
     return veiudo.pos;
 }
 
-void set_monster_pos( pos actual_pos )
+void set_monster_pos( pos next_pos )
 {
-    veiudo.pos = actual_pos;
+    veiudo.pos = next_pos;
 }
 
 int is_monster_catched( void )
@@ -39,140 +38,119 @@ int is_monster_stopped( void )
     return veiudo.stopped;
 }
 
-static void move( pos actual_pos )
+static void move( pos next_pos )
 {
     pos monster_pos = get_monster_pos();
-    actual_pos.on = get_( actual_pos.row, actual_pos.column );
+    next_pos.on = get_( next_pos.row, next_pos.column );
     char body = MONSTER;
     if ( is_monster_catched() ) {
         body = DEAD;
         hero_dead();
     }
-   // char body = is_monster_catched() ? DEAD : MONSTER;
 
-  /*  if ( !monster->catched ) {
-        move_to( &monster->pos, actual_row, actual_column );
+    play_monstro();
+    move_to( monster_pos, next_pos, body );
+    set_monster_pos( next_pos );
+}
+
+
+void _monster_moviment_default( pos *gallego_pos, pos *monster_pos, pos *next_pos )
+{
+    if ( gallego_pos->row > monster_pos->row ) {
+        if ( gallego_pos->column > monster_pos->column ) {
+            switch ( get_rand( 5 ) ) {
+                case 0 : case 1 : next_pos->row ++; break;
+                case 2 : case 3 : next_pos->column ++; break;
+                case 4 : next_pos->row ++, next_pos->column ++; break;
+            }
+        }
+        else if ( gallego_pos->column < monster_pos->column ) {
+            switch ( get_rand( 5 ) ) {
+                case 0 : case 1 : next_pos->row ++; break;
+                case 2 : case 3 : next_pos->column --; break;
+                case 4 : next_pos->row ++, next_pos->column --; break;
+            }
+        }
+        else {
+            next_pos->row ++;
+        }
+    }
+    else if ( gallego_pos->row < monster_pos->row ) {
+        if ( gallego_pos->column > monster_pos->column ) {
+            switch ( get_rand( 5 ) ) {
+                case 0 : case 1 : next_pos->row --; break;
+                case 2 : case 3 : next_pos->column ++; break;
+                case 4 : next_pos->row --, next_pos->column ++; break;
+            }
+        }
+        else if ( gallego_pos->column < monster_pos->column ) {
+            switch ( get_rand( 5 ) ) {
+                case 0 : case 1 : next_pos->row --; break;
+                case 2 : case 3 : next_pos->column --; break;
+                case 4 : next_pos->row --, next_pos->column --; break;
+            }
+        }
+        else {
+            next_pos->row --;
+        }
     }
     else {
-        is_game_over = 1;
-        set[ monster->row ][ monster->column ] = monster->on;
-        set[ *actual_row ][ *actual_column ] = DEAD;
+        if ( gallego_pos->column > monster_pos->column )
+            next_pos->column ++;
+        else if ( gallego_pos->column < monster_pos->column )
+            next_pos->column --;
+        else
+            ;
     }
-    f ( body == MONSTER )
-   //     pos->on = get_( actual_row, actual_column );
-    */
-    play_monstro();
-    move_to( monster_pos, actual_pos, body );
-    set_monster_pos( actual_pos );
 }
 
-/*
-static void _inicialize( monster *monster )
+void search_hero( void(*how_to_search)(pos*,pos*,pos*), pos *gallego_pos, pos *monster_pos, pos *next_pos )
 {
-    int coord[2];
-	raffle( coord );
-
-	monster->pos.row = coord[0], monster->pos.column = coord[1];
-	monster->pos.on = BLOCK;
-	monster->catched = 0;
-
-	set_( monster->pos.row, monster->pos.column, MONSTER );
-	print_set();
+    how_to_search( gallego_pos, monster_pos, next_pos );
 }
-*/
+
+void maybe_monster_wants_stop( void )
+{
+    int rand_sound = get_rand( 20 );
+    if (  rand_sound > 17 && !is_monster_wet() ) {
+        veiudo.stopped = 1;
+        if ( rand_sound == 18 ) play_owyeh();
+        else play_madrecita();
+        usleep(1000000);
+        veiudo.stopped = 0;
+    }
+}
+
+
 void* handle_monster( void *a )
  {
-   // monster monster;
-    //_inicialize( &monster );
-
-	srand(time(NULL));
-
-	pos actual_pos = get_monster_pos();
-	//int actual_column = monster.pos.column, actual_row = monster.pos.row;
-
     usleep( WAIT );
 
 	while ( !is_hero_dead() ) {
 
-        int rand_sound = rand() % 20;
-        if (  rand_sound > 17 && !is_monster_wet() ) {
-            veiudo.stopped = 1;
-            if ( rand_sound == 18 ) play_owyeh();
-            else play_madrecita();
-            usleep(1000000);
-            veiudo.stopped = 0;
-        }
+        pos gallego_pos = get_hero_pos(), monster_pos = get_monster_pos(), next_pos = get_monster_pos();
 
-        pos gallego_pos = get_hero_pos(), monster_pos = get_monster_pos();
+        maybe_monster_wants_stop();
 
-        if ( gallego_pos.row > monster_pos.row ) {
-            if ( gallego_pos.column > monster_pos.column ) {
-                switch ( rand() % 5 ) {
-                    case 0 : case 1 : actual_pos.row ++; break;
-                    case 2 : case 3 : actual_pos.column ++; break;
-                    case 4 : actual_pos.row ++, actual_pos.column ++; break;
-                }
-            }
-            else if ( gallego_pos.column < monster_pos.column ) {
-                switch ( rand() % 5 ) {
-                    case 0 : case 1 : actual_pos.row ++; break;
-                    case 2 : case 3 : actual_pos.column --; break;
-                    case 4 : actual_pos.row ++, actual_pos.column --; break;
-                }
-            }
-            else {
-                actual_pos.row ++;
-            }
-        }
-        else if ( gallego_pos.row < monster_pos.row ) {
-            if ( gallego_pos.column > monster_pos.column ) {
-                switch ( rand() % 5 ) {
-                    case 0 : case 1 : actual_pos.row --; break;
-                    case 2 : case 3 : actual_pos.column ++; break;
-                    case 4 : actual_pos.row --, actual_pos.column ++; break;
-                }
-            }
-            else if ( gallego_pos.column < monster_pos.column ) {
-                switch ( rand() % 5 ) {
-                    case 0 : case 1 : actual_pos.row --; break;
-                    case 2 : case 3 : actual_pos.column --; break;
-                    case 4 : actual_pos.row --, actual_pos.column --; break;
-                }
-            }
-            else {
-                actual_pos.row --;
-            }
-        }
-        else {
-            if ( gallego_pos.column > monster_pos.column )
-                actual_pos.column ++;
-            else if ( gallego_pos.column < monster_pos.column )
-                actual_pos.column --;
-            else
-                ;
-        }
+        search_hero( _monster_moviment_default, &gallego_pos, &monster_pos, &next_pos );
 
-        if ( gallego_pos.row == actual_pos.row && gallego_pos.column == actual_pos.column )
+        if ( gallego_pos.row == next_pos.row && gallego_pos.column == next_pos.column )
             monster_catched();
 
-        if ( get_( actual_pos.row, actual_pos.column ) == TRAP ) {
+        if ( get_( next_pos.row, next_pos.column ) == TRAP ) {
             veiudo.wet_sec = get_sec();
             veiudo.wet = 1;
-            if ( !( rand() % 15 ) )
+            // vou por som de pisar no molhado que ficará na função move...junto com o monster.wav
+            if ( !get_rand( 15 ) )
                 play_wet();
-            /*
-            int rand_sound =  rand() % 10;
-            if ( rand_sound == 9 )
-                play_wet1();
-            else if ( rand_sound == 8 )
-                play_wet2();
-                */
         }
 
-        if ( get_sec() - veiudo.wet_sec == 1 || get_sec() - veiudo.wet_sec == -59 )
+
+        // a ser colocado no set.c!
+        if ( get_sec() - veiudo.wet_sec == 2 || get_sec() - veiudo.wet_sec == -58 )
             veiudo.wet = 0;
 
-        move( actual_pos );
+        move( next_pos );
         usleep( DELAY );
 
 	}

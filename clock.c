@@ -61,33 +61,7 @@ void* handle_time( void *a )
             time_of_match.hrs = hrs;
             time_of_match.min = MIN;
             time_of_match.sec = sec;
-            /*
-            if ( hrs < 10 ) {
-                printf( "\033[4;0H" "0%d", hrs );
-                fflush( stdout );
 
-            } else {
-                printf( "\033[4;0H"  ":%d", hrs );
-                fflush( stdout );
-            }
-
-            if ( min < 10 ) {
-                printf( "\033[4;3H" ":0%d" ,MIN );
-                fflush( stdout );
-            } else {
-                printf( "\033[4;3H" ":%2d", MIN );
-                fflush( stdout );
-            }
-
-            if( sec < 10 ) {
-                printf( "\033[4;6H" ":0%d", sec );
-                fflush( stdout );
-            } else {
-                printf( "\033[4;6H" ":%2d", sec );
-                fflush( stdout );
-
-            }
-            */
         }
     }
     return NULL;

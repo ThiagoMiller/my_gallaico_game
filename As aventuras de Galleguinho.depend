@@ -115,10 +115,10 @@
 	<stdio.h>
 	<termios.h>
 
-1434066069 source:/home/thiago/workspace/Repositórios/my_gallaico_game/hero.c
+1434087094 source:/home/thiago/workspace/Repositórios/my_gallaico_game/hero.c
 	<stdio.h>
 	<stdlib.h>
-	<time.h>
+	<unistd.h>
 	<jogo.h>
 
 1434062027 source:/home/thiago/workspace/Repositórios/my_gallaico_game/main.c
@@ -127,14 +127,13 @@
 	<unistd.h>
 	<jogo.h>
 
-1434066583 source:/home/thiago/workspace/Repositórios/my_gallaico_game/monster.c
+1434087036 source:/home/thiago/workspace/Repositórios/my_gallaico_game/monster.c
 	<stdio.h>
 	<stdlib.h>
 	<unistd.h>
-	<time.h>
 	<jogo.h>
 
-1434065749 source:/home/thiago/workspace/Repositórios/my_gallaico_game/set.c
+1434086739 source:/home/thiago/workspace/Repositórios/my_gallaico_game/set.c
 	<stdio.h>
 	<stdlib.h>
 	<unistd.h>
@@ -150,14 +149,14 @@
 	<pthread.h>
 	<jogo.h>
 
-1434061587 source:/home/thiago/workspace/Repositórios/my_gallaico_game/audio.c
+1434068979 source:/home/thiago/workspace/Repositórios/my_gallaico_game/audio.c
 	<stdio.h>
 	<unistd.h>
 	<stdlib.h>
 	<fmod.h>
 	<fmod_errors.h>
 
-1434061587 source:/home/thiago/workspace/Repositórios/my_gallaico_game/clock.c
+1434084120 source:/home/thiago/workspace/Repositórios/my_gallaico_game/clock.c
 	<stdio.h>
 	<time.h>
 	<jogo.h>

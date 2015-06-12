@@ -9,6 +9,8 @@ static FMOD_SOUND *trilha, *tonto, *action_moeda, *action_walking, *morte, *limi
 static FMOD_CHANNEL *trilha_channel;
 static FMOD_RESULT result;
 
+//FMOD_REVERB3D *shalosh;
+
 static int on = 0;
 
 void fmod_check_errors( FMOD_RESULT result )
@@ -64,6 +66,7 @@ void init_fmod()
     result = FMOD_System_CreateSound( fmod_system, "Audio/madrecita.wav", FMOD_DEFAULT, 0, &madrecita );
     fmod_check_errors( result );
 
+   // FMOD_System_CreateReverb3D( fmod_system, &shalosh );
 }
 
 void play_trilha()
@@ -166,7 +169,6 @@ void update_audio()
     result = FMOD_System_Update( fmod_system );
     fmod_check_errors( result );
 }
-
 
 
 /*
