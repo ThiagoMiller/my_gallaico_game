@@ -25,17 +25,25 @@ int is_hero_dead(void)
     return gallego.is_dead;
 }
 
+int is_hero_mancado(void)
+{
+    return gallego.is_mancando;
+}
+
+
 static void move( pos *actual_pos )
 {
     pos gallego_pos = get_hero_pos();
 
-    int rand_sound = rand() % 40;
-    if ( rand_sound > 37 ) {
+    int rand_sound = rand() % 50;
+    if ( rand_sound > 47 ) {
         *actual_pos = gallego_pos;
-        switch ( rand_sound ) {
-            case 38 :  play_mancando1(); return;
-            case 39 :  play_mancando2(); return;
-        }
+        gallego.is_mancando = 1;
+        if ( rand_sound == 48 ) play_mancando1();
+        else play_mancando2();
+        usleep( 200000 );
+        gallego.is_mancando = 0;
+        return;
     }
   /*  if ( rand_sound == 11 ) {
         *actual_pos = gallego_pos;

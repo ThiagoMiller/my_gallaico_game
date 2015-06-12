@@ -5,7 +5,7 @@
 #include <fmod_errors.h>
 
 static FMOD_SYSTEM *fmod_system;
-static FMOD_SOUND *trilha, *tonto, *action_moeda, *action_walking, *morte, *limite, *monstro, *wet1, *wet2, *mancando1, *mancando2;
+static FMOD_SOUND *trilha, *tonto, *action_moeda, *action_walking, *morte, *limite, *monstro, *owyeh, *wet, *mancando1, *mancando2, *madrecita;
 static FMOD_CHANNEL *trilha_channel;
 static FMOD_RESULT result;
 
@@ -49,10 +49,10 @@ void init_fmod()
     result = FMOD_System_CreateSound( fmod_system, "Audio/monstro.mp3", FMOD_DEFAULT, 0, &monstro );
     fmod_check_errors( result );
 
-    result = FMOD_System_CreateSound( fmod_system, "Audio/wet1.wav", FMOD_DEFAULT, 0, &wet1 );
+    result = FMOD_System_CreateSound( fmod_system, "Audio/owyeh.wav", FMOD_DEFAULT, 0, &owyeh );
     fmod_check_errors( result );
 
-    result = FMOD_System_CreateSound( fmod_system, "Audio/wet2.wav", FMOD_DEFAULT, 0, &wet2 );
+    result = FMOD_System_CreateSound( fmod_system, "Audio/wet.wav", FMOD_DEFAULT, 0, &wet );
     fmod_check_errors( result );
 
     result = FMOD_System_CreateSound( fmod_system, "Audio/mancando1.wav", FMOD_DEFAULT, 0, &mancando1 );
@@ -60,6 +60,10 @@ void init_fmod()
 
     result = FMOD_System_CreateSound( fmod_system, "Audio/mancando2.wav", FMOD_DEFAULT, 0, &mancando2 );
     fmod_check_errors( result );
+
+    result = FMOD_System_CreateSound( fmod_system, "Audio/madrecita.wav", FMOD_DEFAULT, 0, &madrecita );
+    fmod_check_errors( result );
+
 }
 
 void play_trilha()
@@ -126,15 +130,15 @@ void play_tonto()
     sleep( 3 );
 }
 
-void play_wet1()
+void play_owyeh()
 {
-    result = FMOD_System_PlaySound( fmod_system, wet1, 0,0,0 );
+    result = FMOD_System_PlaySound( fmod_system, owyeh, 0,0,0 );
     fmod_check_errors( result );
 }
 
-void play_wet2()
+void play_wet()
 {
-    result = FMOD_System_PlaySound( fmod_system, wet2, 0,0,0 );
+    result = FMOD_System_PlaySound( fmod_system, wet, 0,0,0 );
     fmod_check_errors( result );
 }
 
@@ -147,6 +151,12 @@ void play_mancando1()
 void play_mancando2()
 {
     result = FMOD_System_PlaySound( fmod_system, mancando2, 0,0,0 );
+    fmod_check_errors( result );
+}
+
+void play_madrecita()
+{
+    result = FMOD_System_PlaySound( fmod_system, madrecita, 0,0,0 );
     fmod_check_errors( result );
 }
 
@@ -199,16 +209,19 @@ void release_audio()
     result = FMOD_Sound_Release( trilha );
     fmod_check_errors( result );
 
+    result = FMOD_Sound_Release( madrecita );
+    fmod_check_errors( result );
+
     result = FMOD_Sound_Release( mancando1 );
     fmod_check_errors( result );
 
     result = FMOD_Sound_Release( mancando2 );
     fmod_check_errors( result );
 
-    result = FMOD_Sound_Release( wet1 );
+    result = FMOD_Sound_Release( owyeh );
     fmod_check_errors( result );
 
-    result = FMOD_Sound_Release( wet2 );
+    result = FMOD_Sound_Release( wet );
     fmod_check_errors( result );
 
     result = FMOD_Sound_Release( limite );

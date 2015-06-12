@@ -17,9 +17,10 @@ int main()
     play_trilha();
 
     join_threads();
-
     release_audio();
-    release_threads();
+
+    resetTermios();
+   // release_threads();
 
     return 0;
 }

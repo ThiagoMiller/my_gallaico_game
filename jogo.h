@@ -47,6 +47,7 @@ typedef struct {
 typedef struct {
 	pos pos;
 	unsigned int is_dead:1;
+	unsigned int is_mancando:1;
 } hero;
 
 typedef struct {
@@ -54,6 +55,7 @@ typedef struct {
 	unsigned int catched:1;
 	unsigned int wet:1;
 	int wet_sec;
+	unsigned int stopped:1;
 } monster;
 
 typedef struct {
@@ -100,6 +102,7 @@ int is_hero_dead(void);
 
 void set_monster_pos( pos  );
 int is_monster_wet( void );
+int is_monster_stopped( void );
 
 void init_fmod( void );
 void play_trilha( void );
@@ -111,10 +114,11 @@ void play_monstro();
 void set_walking_volume( float );
 void play_limite();
 void set_trilha_pause();
-void play_wet1();
-void play_wet2();
+void play_owyeh();
+void play_wet();
 void play_mancando1();
 void play_mancando2();
+void play_madrecita();
 void update_audio();
 /*void release_trilha( void );
 void release_tonto( void );

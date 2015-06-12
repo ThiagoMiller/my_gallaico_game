@@ -41,6 +41,7 @@ void join_threads()
     if ( s ) error( "Can't join thread for hero" );
 
     if ( !is_hero_dead() ) {
+
         s = pthread_cancel( t_monster );
         if ( s ) error( "Can't stop the t_moster thread..." );
 
@@ -49,16 +50,19 @@ void join_threads()
 
         s = pthread_cancel( t_clock );
         if ( s ) error( "Can't stop the t_clock thread..." );
+
+    } else {
+
+        s = pthread_join( t_monster, &result );
+        if ( s ) error( "Can't join thread for monster" );
+
+        s = pthread_join( t_set, &result );
+        if ( s ) error( "Can't join thread for t_set" );
+
+        s = pthread_join( t_clock, &result );
+        if ( s ) error( "Can't join thread for t_clock" );
+
     }
-
-    s = pthread_join( t_monster, &result );
-    if ( s ) error( "Can't join thread for monster" );
-
-    s = pthread_join( t_set, &result );
-    if ( s ) error( "Can't join thread for t_set" );
-
-    s = pthread_join( t_clock, &result );
-    if ( s ) error( "Can't join thread for t_clock" );
 }
 
 void lock()

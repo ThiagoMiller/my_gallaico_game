@@ -78,12 +78,19 @@ void print_set( void )
 		for ( j = 0; j < WIDTH; j++ ) {
             char obj = get_( i, j );
 			switch ( obj ) {
-				case HERO      :   printf( BOLDGREEN   "%c "   RESET, obj ); break;
+				case HERO      :
+                    if ( is_hero_mancado() )
+                        printf( BOLDGREEN "\033[41m"  "%c"   RESET " ", obj );
+                    else
+                        printf( BOLDGREEN   "%c "   RESET, obj );
+                    break;
 				case COIN      :   printf( BOLDYELLOW  "%c "   RESET, obj ); break;
 				case TRAP      :   printf( BOLDBLUE    "%c "   RESET, obj ); break;
 				case MONSTER   :
-                    if ( is_monster_wet() )
-                        printf( BLUE    "%c "   RESET, obj );
+                    if (  is_monster_stopped() )
+                        printf( SAGOL "\033[43m" "%c" RESET " ", obj );
+                    else if ( is_monster_wet()  )
+                        printf( RED "\033[44m"    "%c"   RESET " ", obj );
                     else
                         printf( SAGOL       "%c "   RESET, obj );
                     break;
@@ -116,7 +123,7 @@ void* handle_set( void *a )
 {
     while ( 1 ) {
         print_set();
-        usleep( 1000000/60 );
+        usleep( 1000000/24 );
     }
 
     return NULL;
