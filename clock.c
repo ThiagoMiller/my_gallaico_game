@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <time.h>
+#include <unistd.h>
 #include <jogo.h>
 
 
@@ -33,36 +33,31 @@ int get_sec( void )
 
 void* handle_time( void *a )
 {
-    clock_t now = 0;                 /* Holds initial clock time  */
-    int interval = 1;                /* Seconds interval for o/p  */
-    int elapsed = 0;
-    int min = 0, MIN = 0, hrs = 0, sec = 0;
-    int d = 0, f = 0;
-  /* Get current clock time    */
-    now = clock();
+    int elapsed = 0, sec = 0, min = 0, MIN = 0, hrs = 0, d = 0, f = 0;
 
     while ( !is_hero_dead() ) {
 
-        elapsed = (clock() - now)/CLOCKS_PER_SEC;
+        usleep( 1000000 );
+		elapsed++;
 
-        if ( elapsed >= interval ){
-            interval += 1;
-            if ( elapsed % 60 == 0 ) {
-                min = elapsed/60;
-                d = 60*min;
-                if( min % 60 == 0 ) {
-                    hrs = min/60;
-                    f = 60*hrs;
-                }
-            }
-            sec = elapsed - d;
-            MIN = min - f;
-
-            time_of_match.hrs = hrs;
-            time_of_match.min = MIN;
-            time_of_match.sec = sec;
-
+		if ( elapsed % 60 == 0 ) {
+			min = elapsed / 60;
+			d = min * 60;
+			if ( min % 60 == 0 ) {
+				hrs = min / 60;
+				f = 60 * hrs;
+			}
         }
+
+		sec = elapsed - d;
+		MIN = min - f;
+
+        time_of_match.hrs = hrs;
+        time_of_match.min = MIN;
+        time_of_match.sec = sec;
+
     }
+
     return NULL;
 }
+
