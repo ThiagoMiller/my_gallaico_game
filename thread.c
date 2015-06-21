@@ -6,7 +6,7 @@
 #include <pthread.h>
 #include <jogo.h>
 
-static pthread_t t_monster, t_hero, t_set, t_clock;
+static pthread_t t_monster, t_hero, t_set, t_clock, t_fruit;
 static pthread_mutex_t move_lock = PTHREAD_MUTEX_INITIALIZER;
 
 
@@ -30,6 +30,9 @@ void init_threads()
 
     if ( pthread_create( &t_clock, NULL, handle_time, NULL ) == -1 )
         error( "Can't create thread for clock" );
+
+    if ( pthread_create( &t_fruit, NULL, handle_fruit, NULL ) == -1 )
+        error( "Can't create thread for fruit" );
 }
 
 void join_threads()
@@ -51,6 +54,9 @@ void join_threads()
         s = pthread_cancel( t_clock );
         if ( s ) error( "Can't stop the t_clock thread..." );
 
+        s = pthread_cancel( t_fruit );
+        if ( s ) error( "Can't stop the t_fruit thread..." );
+
     } else {
 
         s = pthread_join( t_monster, &result );
@@ -62,6 +68,8 @@ void join_threads()
         s = pthread_join( t_clock, &result );
         if ( s ) error( "Can't join thread for t_clock" );
 
+        s = pthread_join( t_fruit, &result );
+        if ( s ) error( "Can't join thread for t_fruit" );
     }
 }
 

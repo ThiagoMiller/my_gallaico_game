@@ -67,6 +67,11 @@ static void move( pos *actual_pos )
             score_up();
             play_action_moeda();
         }
+        else if ( destiny == FRUIT ) {
+            score_up();
+            menos_fruit();
+        }
+
 
         set_hero_pos( *actual_pos );
 

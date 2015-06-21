@@ -30,7 +30,7 @@
 #define LEFT_BORDER "\t\t\t"
 #define VERTICAL_BORDER "\n\n"
 
-enum { BLOCK = '.', COIN = '0', HERO = 'G', DEAD = 'X', TRAP = '~', MONSTER = 'M' };
+enum { BLOCK = '.', COIN = '0', HERO = 'G', DEAD = 'X', TRAP = '~', MONSTER = 'M', FRUIT = 'f' };
 
 typedef struct {
     char arena[ HEIGHT ][ WIDTH ];
@@ -88,6 +88,7 @@ void *handle_hero( void * );
 void *handle_monster( void * );
 void* handle_set( void * );
 void* handle_time( void * );
+void *handle_fruit( void * );
 int game_over( void );
 
 void init_threads();
@@ -100,6 +101,7 @@ pos get_hero_pos( void );
 void set_hero_pos( pos );
 void hero_dead( void );
 int is_hero_dead(void);
+int is_hero_mancado(void);
 
 void set_monster_pos( pos  );
 int is_monster_wet( void );
@@ -129,6 +131,9 @@ void release_audio( void );
 
 void get_time_of_day( char *);
 int get_sec( void );
+
+void menos_fruit( void );
+void get_color_fruit( char *color_fruit, int row, int column );
 
 
 

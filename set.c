@@ -52,6 +52,7 @@ void print_set( void )
 //	static int inicialized = 0;
 	int is_dead = 0;
 	int i, j;
+	char color_fruit[20];
 	char format[9];
 	get_time_of_day( format );
 /*
@@ -86,6 +87,9 @@ void print_set( void )
                     break;
 				case COIN      :   printf( BOLDYELLOW  "%c "   RESET, obj ); break;
 				case TRAP      :   printf( BOLDBLUE    "%c "   RESET, obj ); break;
+				case FRUIT     :
+                    get_color_fruit( color_fruit, i, j );
+                    printf(  "%s%c "   RESET, color_fruit, obj ); break;
 				case MONSTER   :
                     if (  is_monster_stopped() )
                         printf( SAGOL "\033[43m" "%c" RESET " ", obj );
@@ -158,21 +162,16 @@ void move_to( pos old_pos, pos new_pos, char body )
 
 void raffle( int *coord )
 {
-	static int tabu[ 2 + QNT_COINS + QNT_TRAPS ][ 2 ], acm = 0;
-    int column_rand, row_rand, i;
+    int column_rand, row_rand;
 
-	NEXT_TRY: while ( 1 ) {
-		column_rand = get_rand( WIDTH ), row_rand = get_rand( HEIGHT );
-		for ( i = 0; i < acm; i++ ) {
-			if ( tabu[i][0] == row_rand && tabu[i][1] == column_rand )
-				goto NEXT_TRY;
-		}
+    while ( 1 ) {
+        column_rand = get_rand( WIDTH ), row_rand = get_rand( HEIGHT );
+        if ( get_( row_rand, column_rand ) != BLOCK )
+            continue;
 
-		tabu[ acm ][ 0 ] = row_rand, tabu[ acm ][ 1 ] = column_rand;
 		coord[0] = row_rand, coord[1] = column_rand;
 		break;
 	}
-	acm++;
 }
 
 int get_rand( int untill )
