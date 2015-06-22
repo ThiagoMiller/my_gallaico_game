@@ -80,11 +80,15 @@ void print_set( void )
             char obj = get_( i, j );
 			switch ( obj ) {
 				case HERO      :
-                    if ( is_hero_mancado() )
+                    if ( is_gallego_cagating() )
+                         printf( BOLDGREEN "\033[48;5;58m"  "%c" RESET " ", obj );
+                    else if ( is_hero_mancado() )
                         printf( BOLDGREEN "\033[41m"  "%c"   RESET " ", obj );
                     else
                         printf( BOLDGREEN   "%c "   RESET, obj );
                     break;
+                case BOSTA:
+                    printf( "\033[38;5;58m"  "%c " RESET, obj ); break;
 				case COIN      :   printf( BOLDYELLOW  "%c "   RESET, obj ); break;
 				case TRAP      :   printf( BOLDBLUE    "%c "   RESET, obj ); break;
 				case FRUIT     :

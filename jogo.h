@@ -30,7 +30,7 @@
 #define LEFT_BORDER "\t\t\t"
 #define VERTICAL_BORDER "\n\n"
 
-enum { BLOCK = '.', COIN = '0', HERO = 'G', DEAD = 'X', TRAP = '~', MONSTER = 'M', FRUIT = 'f' };
+enum { BLOCK = '.', COIN = '0', HERO = 'G', DEAD = 'X', TRAP = '~', MONSTER = 'M', FRUIT = 'f', BOSTA = 's' };
 
 typedef struct {
     char arena[ HEIGHT ][ WIDTH ];
@@ -48,6 +48,9 @@ typedef struct {
 	pos pos;
 	unsigned int is_dead:1;
 	unsigned int is_mancando:1;
+	unsigned int is_trying_cagate:1;
+	unsigned int is_cagating:1;
+	int eated_fruts;
 } hero;
 
 typedef struct {
@@ -63,11 +66,6 @@ typedef struct {
     int min;
     int sec;
 } clock_game;
-
-typedef struct {
-    char data[ QNT_COINS + QNT_FRUIT + QNT_TRAPS + 2 ][2];
-    int ptr;
-} lista;
 
 
 char getch( void );
@@ -102,6 +100,7 @@ void set_hero_pos( pos );
 void hero_dead( void );
 int is_hero_dead(void);
 int is_hero_mancado(void);
+int is_gallego_cagating(void);
 
 void set_monster_pos( pos  );
 int is_monster_wet( void );

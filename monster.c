@@ -104,6 +104,12 @@ void _monster_moviment_default( pos *gallego_pos, pos *monster_pos, pos *next_po
     }
 }
 
+void _monster_moviment_default_teste( pos *gallego_pos, pos *monster_pos, pos *next_pos )
+{
+    //faz nada...
+}
+
+
 void search_hero( void(*how_to_search)(pos*,pos*,pos*), pos *gallego_pos, pos *monster_pos, pos *next_pos )
 {
     how_to_search( gallego_pos, monster_pos, next_pos );
@@ -132,7 +138,7 @@ void* handle_monster( void *a )
 
         maybe_monster_wants_stop();
 
-        search_hero( _monster_moviment_default, &gallego_pos, &monster_pos, &next_pos );
+        search_hero( _monster_moviment_default_teste, &gallego_pos, &monster_pos, &next_pos );
 
         if ( gallego_pos.row == next_pos.row && gallego_pos.column == next_pos.column )
             monster_catched();
