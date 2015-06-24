@@ -95,7 +95,9 @@ void print_set( void )
                     get_color_fruit( color_fruit, i, j );
                     printf(  "%s%c "   RESET, color_fruit, obj ); break;
 				case MONSTER   :
-                    if (  is_monster_stopped() )
+                    if ( is_monster_shited() )
+                         printf( SAGOL "\033[48;5;58m" "%c" RESET " ", obj );
+                    else if (  is_monster_stopped() )
                         printf( SAGOL "\033[43m" "%c" RESET " ", obj );
                     else if ( is_monster_wet()  )
                         printf( RED "\033[44m"    "%c"   RESET " ", obj );

@@ -58,7 +58,9 @@ typedef struct {
 	unsigned int catched:1;
 	unsigned int wet:1;
 	int wet_sec;
+	int shited_sec;
 	unsigned int stopped:1;
+	unsigned int shited:1;
 } monster;
 
 typedef struct {
@@ -105,6 +107,7 @@ int is_gallego_cagating(void);
 void set_monster_pos( pos  );
 int is_monster_wet( void );
 int is_monster_stopped( void );
+int is_monster_shited( void );
 
 void init_fmod( void );
 void play_trilha( void );

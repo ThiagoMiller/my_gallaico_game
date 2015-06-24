@@ -6,7 +6,7 @@
 #define WAIT  1700000 // 1,7 seg
 #define DELAY 450000 // 0,45 segs
 
-static monster veiudo = { .catched = 0, .wet = 0, .stopped = 0 };
+static monster veiudo = { .catched = 0, .wet = 0, .stopped = 0, .shited = 0 };
 
 pos get_monster_pos( void )
 {
@@ -38,10 +38,20 @@ int is_monster_stopped( void )
     return veiudo.stopped;
 }
 
+void pisou_na_bosta(void)
+{
+    veiudo.shited = 1;
+}
+
+int is_monster_shited()
+{
+    return veiudo.shited;
+}
+
 static void move( pos next_pos )
 {
     pos monster_pos = get_monster_pos();
-    next_pos.on = get_( next_pos.row, next_pos.column );
+    next_pos.on = is_monster_shited() ? BLOCK : get_( next_pos.row, next_pos.column );
     char body = MONSTER;
     if ( is_monster_catched() ) {
         body = DEAD;
@@ -50,6 +60,11 @@ static void move( pos next_pos )
 
     play_monstro();
     move_to( monster_pos, next_pos, body );
+    if ( is_monster_shited() ) {
+        play_wet();
+        usleep( 1000000 );
+        veiudo.shited = 0;
+    }
     set_monster_pos( next_pos );
 }
 
@@ -138,20 +153,27 @@ void* handle_monster( void *a )
 
         maybe_monster_wants_stop();
 
-        search_hero( _monster_moviment_default_teste, &gallego_pos, &monster_pos, &next_pos );
+        search_hero( _monster_moviment_default, &gallego_pos, &monster_pos, &next_pos );
 
         if ( gallego_pos.row == next_pos.row && gallego_pos.column == next_pos.column )
             monster_catched();
+
+        if ( get_( next_pos.row, next_pos.column ) == BOSTA ) {
+            score_up();
+            pisou_na_bosta();
+            veiudo.shited_sec = get_sec();
+        }
 
         if ( get_( next_pos.row, next_pos.column ) == TRAP ) {
             veiudo.wet_sec = get_sec();
             veiudo.wet = 1;
             // vou por som de pisar no molhado que ficará na função move...junto com o monster.wav
-            if ( !get_rand( 15 ) )
-                play_wet();
+            //if ( !get_rand( 15 ) )
+             //   play_wet();
         }
 
-
+       // if ( get_sec() - veiudo.shited_sec == 2 || get_sec() - veiudo.shited_sec == -58 )
+        //    veiudo.shited = 0;
         // a ser colocado no set.c!
         if ( get_sec() - veiudo.wet_sec == 2 || get_sec() - veiudo.wet_sec == -58 )
             veiudo.wet = 0;
