@@ -39,12 +39,17 @@
 		<Unit filename="audio.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="characters.h" />
 		<Unit filename="clock.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="fruit.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="gallego.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="gallego.h" />
 		<Unit filename="getch.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -61,9 +66,14 @@
 		<Unit filename="set.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="set.h" />
 		<Unit filename="thread.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="veiudo.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="veiudo.h" />
 		<Extensions>
 			<code_completion />
 			<debugger />

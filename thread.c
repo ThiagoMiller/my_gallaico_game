@@ -9,6 +9,7 @@
 static pthread_t t_monster, t_hero, t_set, t_clock, t_fruit;
 static pthread_mutex_t move_lock = PTHREAD_MUTEX_INITIALIZER;
 
+int s;
 
 void error( char *msg )
 {
@@ -38,7 +39,6 @@ void init_threads()
 void join_threads()
 {
     void *result;
-    int s;
 
     s = pthread_join( t_hero, &result );
     if ( s ) error( "Can't join thread for hero" );
@@ -75,14 +75,12 @@ void join_threads()
 
 void lock()
 {
-    int s;
     s = pthread_mutex_lock( &move_lock );
     if ( s ) error( "Can't lock thread flow" );
 }
 
 void unlock()
 {
-    int s;
     s = pthread_mutex_unlock( &move_lock );
     if ( s ) error( "Can't unlock thread flow" );
 }
