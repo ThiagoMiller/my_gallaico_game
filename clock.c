@@ -1,6 +1,8 @@
+#include "clock.h"
+
 #include <stdio.h>
 #include <unistd.h>
-#include <jogo.h>
+
 
 
 static clock_game time_of_match = { 0, 0, 0 };

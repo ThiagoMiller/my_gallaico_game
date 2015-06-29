@@ -1,10 +1,15 @@
+#include "thread.h"
+#include "gallego.h"
+#include "veiudo.h"
+#include "set.h"
+#include "clock.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
 #include <errno.h>
 #include <pthread.h>
-#include <jogo.h>
 
 static pthread_t t_monster, t_hero, t_set, t_clock, t_fruit;
 static pthread_mutex_t move_lock = PTHREAD_MUTEX_INITIALIZER;
@@ -32,8 +37,8 @@ void init_threads()
     if ( pthread_create( &t_clock, NULL, handle_time, NULL ) == -1 )
         error( "Can't create thread for clock" );
 
-    if ( pthread_create( &t_fruit, NULL, handle_fruit, NULL ) == -1 )
-        error( "Can't create thread for fruit" );
+    //if ( pthread_create( &t_fruit, NULL, handle_fruit, NULL ) == -1 )
+    //    error( "Can't create thread for fruit" );
 }
 
 void join_threads()
@@ -89,7 +94,3 @@ void release_threads()
 {
     pthread_exit( NULL );
 }
-
-
-
-

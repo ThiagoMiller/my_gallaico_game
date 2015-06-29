@@ -1,12 +1,14 @@
+#include "jogo2.h"
+#include "thread.h"
+#include "getch.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <jogo.h>
 
 
 int main()
 {
-    init_fmod();
+    //init_fmod();
     system( "clear" );
 
     printf( BECON "\n" LEFT_BORDER PINK " VAI COMEÇAR A BAIXARIA!\n" RESET );
@@ -14,10 +16,10 @@ int main()
 
     build_set();
     init_threads();
-    play_trilha();
+  //  play_trilha();
 
     join_threads();
-    release_audio();
+  //  release_audio();
 
     resetTermios();
    // release_threads();

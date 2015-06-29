@@ -1,9 +1,10 @@
+#include "fruit.h"
+#include "jogo2.h"
+
 #include <stdio.h>
-#include <jogo.h>
 #include <string.h>
 #include <unistd.h>
 
-#define MAX_FRUIT 5
 
 typedef struct {
     int num_fruit;

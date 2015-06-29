@@ -1,6 +1,3 @@
-#ifndef CHARACTERS_H
-#define CHARACTERS_H
-
 #define HEIGHT 10
 #define WIDTH 10
 #define QNT_COINS 3
@@ -32,8 +29,6 @@
 #define BLUE_B "\033[44m"
 #define RED_B "\033[41m"
 #define BROWN_B "\033[48;5;58m"
-#define WHITE_B "\033[0;47m"
-#define YELLOW_B "\033[43m"
 
 // control console position
 #define CLEAN "\033[2J"
@@ -44,21 +39,3 @@
 // borders
 #define LEFT_BORDER "\t\t\t"
 #define VERTICAL_BORDER "\n\n"
-
-typedef struct {
-    int row;
-    int col;
-} pos;
-
-typedef struct {
-    char *color;
-    char body;
-} status;
-
-typedef enum {
-  OBJ, CHAR
-} TYPE_BODY;
-
-enum { BLOCK = '.', COIN = '0', HERO = 'G', DEAD = 'X', TRAP = '~', MONSTER = 'M', FRUIT = 'f', BOSTA = 's' };
-
-#endif // CHARACTERS_H

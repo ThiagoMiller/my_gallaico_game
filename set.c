@@ -219,7 +219,7 @@ void build_set( void )
 	raffle( coord );
 	set_( coord[0], coord[1], HERO );
 	actual_pos.row = coord[0], actual_pos.column = coord[1];
-    set_hero_pos( actual_pos );
+  set_hero_pos( actual_pos );
 
 	// set monster pos
 	raffle( coord );
@@ -231,4 +231,3 @@ void build_set( void )
     print_set();
 
 }
-

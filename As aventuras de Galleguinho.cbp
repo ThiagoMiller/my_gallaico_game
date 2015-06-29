@@ -43,9 +43,8 @@
 		<Unit filename="clock.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="fruit.c">
-			<Option compilerVar="CC" />
-		</Unit>
+		<Unit filename="clock.h" />
+		<Unit filename="fruit.h" />
 		<Unit filename="gallego.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -53,23 +52,31 @@
 		<Unit filename="getch.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="hero.c">
+		<Unit filename="getch.h" />
+		<Unit filename="handle_hero.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="jogo.h" />
+		<Unit filename="handle_monster.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="handle_set.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="jogo.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="jogo2.h" />
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="monster.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="set.c">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="set.h" />
+		<Unit filename="set2.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="thread.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="thread.h" />
 		<Unit filename="veiudo.c">
 			<Option compilerVar="CC" />
 		</Unit>
