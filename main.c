@@ -1,6 +1,7 @@
 #include "jogo2.h"
 #include "thread.h"
 #include "getch.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>

@@ -16,7 +16,7 @@ typedef struct {
 typedef struct {
     pos *pos;
    // flag *flag;
-   unsigned int dead:1;
+    unsigned int dead:1;
     status *printable;
     unsigned int eated_fruts:2;
     unsigned int score;

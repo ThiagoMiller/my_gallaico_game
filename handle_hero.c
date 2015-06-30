@@ -3,7 +3,10 @@
 #include "jogo2.h"
 #include "set.h"
 #include "getch.h"
+
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 
 hero *gallego;
@@ -118,6 +121,8 @@ static void move( pos *actual_pos )
     {
         cell *destiny = get_cell( *actual_pos );
         if ( destiny->layer0 != NULL && destiny->layer0->body == MONSTER) {
+            free( gallego->printable->color );
+            gallego->printable->color = strdup( RED );
             gallego->printable->body = DEAD;
             hero_dead();
         }
@@ -204,6 +209,6 @@ void* handle_hero( void *a )
         move( &actual_pos );
 
     }
-
+    printf( "hero\n" );
     return NULL;
 }

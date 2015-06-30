@@ -2,6 +2,7 @@
 #include "set.h"
 #include "gallego.h"
 #include "veiudo.h"
+#include "item.h"
 
 #include <stdio.h>
 #include <unistd.h>
@@ -14,6 +15,7 @@ void build_set( void )
 
     init_hero();
     init_monster();
+    init_fruits();
 
     print_set();
 }

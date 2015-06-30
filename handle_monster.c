@@ -5,6 +5,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <unistd.h>
 
 #define WAIT  1700000 // 1,7 seg
@@ -122,6 +123,8 @@ void* handle_monster( void *a )
         search_hero( _monster_moviment_default, &gallego_pos, &monster_pos, &next_pos );
 
         if ( gallego_pos.row == next_pos.row && gallego_pos.col == next_pos.col ) {
+            free( veiudo->printable->color );
+            veiudo->printable->color = strdup( RED );
             veiudo->printable->body = DEAD;
             hero_dead();
         }

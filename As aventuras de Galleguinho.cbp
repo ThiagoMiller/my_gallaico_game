@@ -44,7 +44,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="clock.h" />
-		<Unit filename="fruit.h" />
 		<Unit filename="gallego.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -53,6 +52,9 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="getch.h" />
+		<Unit filename="handle_fruits.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="handle_hero.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -62,6 +64,10 @@
 		<Unit filename="handle_set.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="item.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="item.h" />
 		<Unit filename="jogo.c">
 			<Option compilerVar="CC" />
 		</Unit>
