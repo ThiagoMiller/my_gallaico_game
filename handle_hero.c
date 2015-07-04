@@ -3,46 +3,73 @@
 #include "jogo2.h"
 #include "set.h"
 #include "getch.h"
+#include "bosta.h"
+#include "item.h"
+#include "audio.h"
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
+
+extern char *state_color[];
+
+static hero *gallego;
 
 
-hero *gallego;
-
-
+char *bosta_power[] = {
+    "\033[48;5;8m" " B O S T A ",
+    BROWN_B " B O" "\033[48;5;8m" " S T A ",
+    BROWN_B " B O S " "\033[48;5;8m" "T A ",
+    BROWN_B " B O S T A "
+};
 
 pos get_hero_pos( void )
 {
-  return *gallego->pos;
+  return *gallego->obj->pos;
 }
 
-void set_hero_pos( pos pos)
-{
-   gallego->pos->col = pos.col, gallego->pos->row = pos.row;
-}
 
 void hero_dead( void )
 {
     gallego->dead = 1;
-    gallego->printable->body = DEAD;
 }
 
 int is_hero_dead(void)
 {
     return gallego->dead;
 }
-/*
-void trying_cagate(void)
+
+int get_score(void)
 {
-    gallego->flag->trying_cagate = 1;
-    if ( gallego->eated_fruts == 3 )
-      cagate();
-    else
-      it_was_just_a_little_fart();
+    return gallego->score;
 }
 
+void trying_cagate(void)
+{
+   //gallego->flag->trying_cagate = 1;
+    if ( gallego->eated_fruts == 3 ) {
+        gallego->eated_fruts = 0;
+        rebosteio( *gallego->obj->pos );
+        gallego->obj->printable->color = state_color[ CAGATE_COLOR ];
+        gallego->cagating = 1;
+    //  cagate();
+    }
+ //   else
+  //    it_was_just_a_little_fart();
+}
+
+void score_up( int score )
+{
+    gallego->score += score;
+}
+
+char *get_bosta_format( void )
+{
+    return bosta_power[ gallego->eated_fruts ];
+}
+
+/*
 void it_was_just_a_little_fart()
 {
     gallego->flag->trying_cagate = 0;
@@ -53,9 +80,10 @@ int is_gallego_trying_cagate(void)
     return gallego->flag->trying_cagate;
 }
 
+
+
 void eat_frut()
 {
-    //menos_fruit();
     if ( gallego->eated_fruts == 3 )
         return;
     gallego->eated_fruts++;
@@ -94,38 +122,92 @@ int is_hero_limpping(void)
     return gallego->flag->limpping;
 }
 
-
+*/
 void maybe_gallego_is_limpping( void )
 {
     int rand_sound = get_rand( 40 );
     if ( rand_sound > 37 ) {
-        gallego->flag->limpping = 1;
-
+        gallego->obj->printable->color = state_color[LIMP_COLOR];
+        gallego->limpping = 1;
         if ( rand_sound == 38 ) play_mancando1();
         else play_mancando2();
     }
 }
-*/
-static void move( pos *actual_pos )
+
+static void move( pos *next_pos )
 {
-    pos gallego_pos = get_hero_pos();
 
-  //  maybe_gallego_is_limpping(); // botar um if para não colidir cagate com mancate!
+    maybe_gallego_is_limpping(); // botar um if para não colidir cagate com mancate!
 
-	if (    actual_pos->col >= 0         &&
-          actual_pos->col < WIDTH      &&
-          actual_pos->row >= 0            &&
-          actual_pos->row < HEIGHT
-        //  !is_hero_limpping()             )
-      )
+	if (    next_pos->col >= 0          &&
+            next_pos->col < WIDTH       &&
+            next_pos->row >= 0          &&
+            next_pos->row < HEIGHT      &&
+            !gallego->limpping             )
     {
-        cell *destiny = get_cell( *actual_pos );
+        if ( gallego->cagating ) {
+            gallego->cagating = 0;
+            gallego->obj->printable->color = state_color[DEFAULT_HERO_COLOR];
+        }
+
+        cell *destiny = get_cell( *next_pos );
+
         if ( destiny->layer0 != NULL && destiny->layer0->body == MONSTER) {
-            free( gallego->printable->color );
-            gallego->printable->color = strdup( RED );
-            gallego->printable->body = DEAD;
+           // free( gallego->obj->printable->color );
+            gallego->obj->printable->color = state_color[ DEAD_COLOR ];
+            gallego->obj->printable->body = DEAD;
             hero_dead();
         }
+        else if ( destiny->layer1 != NULL ) {
+            switch ( destiny->layer1->body ) {
+            case FRUIT :
+                if ( gallego->eated_fruts < 3 )
+                    gallego->eated_fruts++;
+                score_up( 1 );
+                clean_item( destiny );
+                break;
+            case COIN :
+                score_up( 3 );
+                clean_item( destiny );
+                play_action_moeda();
+                break;
+            case BOSTA :
+                down_bosta( destiny->layer1 );
+                score_up( -2 );
+                gallego->obj->printable->color = state_color[CAGATED_COLOR];
+                gallego->cagated = 1;
+                break;
+            case L_BOSTA :
+                score_up( -1 );
+                gallego->obj->printable->color = state_color[CAGATED_COLOR];
+                gallego->cagated = 1;
+                clean_item( destiny );
+                break;
+            }
+        }
+           /* if ( destiny->layer1->body == FRUIT ) {
+                if ( gallego->eated_fruts < 3 )
+                    gallego->eated_fruts++;
+
+                score_up( 1 );
+                clean_item( destiny );
+            }
+            else if ( destiny->layer1->body == COIN ) {
+                score_up( 3 );
+                clean_item( destiny );
+            }
+            else if ( destiny->layer1->body == BOSTA ) {
+                down_bosta( destiny->layer1 );
+                score_up( -2 );
+            }
+            else if ( destiny->layer1->body == L_BOSTA ) {
+                clean_item( destiny );
+                score_up( -1 );
+            }
+
+
+        }*/
+
       /*  if ( destiny->layer1->body == TRAP || destiny->layer0->body == MONSTER ) {
             gallego->printable->body = DEAD;
             hero_dead();
@@ -137,8 +219,15 @@ static void move( pos *actual_pos )
         }
 
 */
-        //play_action_walking();
-        move_to( gallego_pos, *actual_pos, gallego->printable );
+        play_action_walking();
+        move_to( gallego->obj, *next_pos );
+
+        if ( gallego->cagated ) {
+            usleep(300000);
+            gallego->obj->printable->color = state_color[DEFAULT_HERO_COLOR];
+            gallego->cagated = 0;
+        }
+
 
       /*  if ( destiny == COIN ) {
             score_up();
@@ -150,15 +239,20 @@ static void move( pos *actual_pos )
         }
 */
 
-        set_hero_pos( *actual_pos );
-
 	} else {
-        *actual_pos = gallego_pos;
+        *next_pos = get_hero_pos();
+        if ( gallego->limpping ) {
+            usleep(100000);
+            gallego->obj->printable->color = state_color[DEFAULT_HERO_COLOR];
+            gallego->limpping = 0;
+        } else {
+            play_limite();
+        }
     /*    if ( is_gallego_trying_cagate() ) {
         // programação de alto nível! a gente vê por aqui!
             if ( is_ready_bosta() ) {
                 cagate();
-               // actual_pos->on = BOSTA;
+               // next_pos->on = BOSTA;
             }
             else
                 it_was_just_a_little_fart();
@@ -176,39 +270,39 @@ static void move( pos *actual_pos )
 
 void init_hero()
 {
-  gallego = create_hero( raffle() );
-  set_cell( *gallego->pos, gallego->printable, CHAR );
+    gallego = create_hero( raffle() );
+    set_cell( gallego->obj, CHAR );
 }
 
 
 void* handle_hero( void *a )
 {
-    pos actual_pos = get_hero_pos();
+    pos next_pos = get_hero_pos();
     int direction;
     while ( ( direction = getch() ) != 'q' && !is_hero_dead() ) {
         switch( direction ) {
             case 'w' :
-                actual_pos.row --;
+                next_pos.row --;
                 break;
             case 's' :
-                actual_pos.row ++;
+                next_pos.row ++;
                 break;
             case 'a' :
-                actual_pos.col --;
+                next_pos.col --;
                 break;
             case 'd' :
-                actual_pos.col ++;
+                next_pos.col ++;
                 break;
             case ' ' :
-               // trying_cagate();
+                trying_cagate();
                 continue;
             default :
                 continue;
         }
 
-        move( &actual_pos );
+        move( &next_pos );
 
     }
-    printf( "hero\n" );
+
     return NULL;
 }

@@ -1,12 +1,14 @@
+#include "audio.h"
+
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include <fmod.h>
 #include <fmod_errors.h>
 
-static FMOD_SYSTEM *fmod_system;
-static FMOD_SOUND *trilha, *tonto, *action_moeda, *action_walking, *morte, *limite, *monstro, *owyeh, *wet, *mancando1, *mancando2, *madrecita;
-static FMOD_CHANNEL *trilha_channel;
+static FMOD_SYSTEM *fmod_system, *fmod_system2;
+static FMOD_SOUND *trilha, *tonto, *action_moeda, *action_walking, *morte, *limite, *monstro, *owyeh, *wet, *mancando1, *mancando2, *madrecita, *alex_kid, *menu_ch;
+static FMOD_CHANNEL *trilha_channel, *alex_kid_channel;
 static FMOD_RESULT result;
 
 //FMOD_REVERB3D *shalosh;
@@ -21,7 +23,7 @@ void fmod_check_errors( FMOD_RESULT result )
     }
 }
 
-void init_fmod()
+void init_main_fmod()
 {
 
     result = FMOD_System_Create( &fmod_system );
@@ -69,6 +71,22 @@ void init_fmod()
    // FMOD_System_CreateReverb3D( fmod_system, &shalosh );
 }
 
+void init_menu_fmod()
+{
+    result = FMOD_System_Create( &fmod_system2 );
+    fmod_check_errors( result );
+
+    result = FMOD_System_Init( fmod_system2, 32, FMOD_INIT_NORMAL, NULL );
+    fmod_check_errors( result );
+
+    result = FMOD_System_CreateStream( fmod_system2, "Audio/alex_kid.mp3", FMOD_LOOP_NORMAL, 0, &alex_kid  );
+    fmod_check_errors( result );
+
+    result = FMOD_System_CreateSound( fmod_system2, "Audio/menu_ch.mp3", FMOD_DEFAULT, 0, &menu_ch );
+    fmod_check_errors( result );
+}
+
+
 void play_trilha()
 {
     result = FMOD_System_PlaySound( fmod_system, trilha, 0,0, &trilha_channel );
@@ -76,6 +94,27 @@ void play_trilha()
     on = 1;
 
     result = FMOD_Channel_SetVolume( trilha_channel, 0.4 );
+    fmod_check_errors( result );
+}
+
+void play_alex_kid()
+{
+    result = FMOD_System_PlaySound( fmod_system2, alex_kid, 0,0, &alex_kid_channel );
+    fmod_check_errors( result );
+
+    result = FMOD_Channel_SetVolume( alex_kid_channel, 0.5 );
+    fmod_check_errors( result );
+}
+
+void stop_alex_kid()
+{
+    result = FMOD_Channel_Stop( alex_kid_channel );
+    fmod_check_errors( result );
+}
+
+void stop_trilha()
+{
+    result = FMOD_Channel_Stop( trilha_channel );
     fmod_check_errors( result );
 }
 
@@ -163,6 +202,12 @@ void play_madrecita()
     fmod_check_errors( result );
 }
 
+void play_menu_ch()
+{
+    result = FMOD_System_PlaySound( fmod_system2, menu_ch, 0,0,0 );
+    fmod_check_errors( result );
+}
+
 
 void update_audio()
 {
@@ -170,6 +215,11 @@ void update_audio()
     fmod_check_errors( result );
 }
 
+void update_menu_audio()
+{
+    result = FMOD_System_Update( fmod_system2 );
+    fmod_check_errors( result );
+}
 
 /*
 void release_trilha()
@@ -206,7 +256,7 @@ void release_system()
 
 */
 
-void release_audio()
+void release_main_audio()
 {
     result = FMOD_Sound_Release( trilha );
     fmod_check_errors( result );
@@ -250,6 +300,21 @@ void release_audio()
     result = FMOD_System_Release(fmod_system);
     fmod_check_errors( result );
 
+}
+
+void release_menu_audio()
+{
+    result = FMOD_Sound_Release( alex_kid );
+    fmod_check_errors( result );
+
+    result = FMOD_Sound_Release( menu_ch );
+    fmod_check_errors( result );
+
+    result = FMOD_System_Close(fmod_system2);
+    fmod_check_errors( result );
+
+    result = FMOD_System_Release(fmod_system2);
+    fmod_check_errors( result );
 }
 
 

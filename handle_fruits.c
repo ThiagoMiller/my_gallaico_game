@@ -10,7 +10,7 @@
 
 #define NUM_FRUIT_COLOR 6
 
-static item *fruits;
+static obj *fruits;
 
 static char *fruit_colors[] = {
     RED,
@@ -23,33 +23,17 @@ static char *fruit_colors[] = {
 
 void init_fruits( void )
 {
-    fruits = create_fruits();
-}
-
-item *find_available( void )
-{
-    item *available = NULL;
-
-    int i;
-    for ( i = 0; i < MAX_FRUITS; i++ ) {
-        if ( ( fruits + i )->available ) {
-            available = ( fruits + i );
-            available->available = 0;
-            break;
-        }
-    }
-
-    return available;
+    fruits = create_item( _FRUIT_ );
 }
 
 void *handle_fruits( void *a )
 {
-    item *fruit_available;
+    obj *fruit_available;
     while ( !is_hero_dead() ) {
 
         usleep( 5000000 );
 
-        if ( ( fruit_available = find_available() ) != NULL ) {
+        if ( ( fruit_available = find_available( fruits, MAX_FRUITS ) ) != NULL ) {
             if ( fruit_available->pos != NULL )
                 free( fruit_available->pos );
 
@@ -60,11 +44,10 @@ void *handle_fruits( void *a )
 
             fruit_available->printable->color = strdup( fruit_colors[ get_rand( NUM_FRUIT_COLOR ) ] );
 
-            set_cell( *fruit_available->pos, fruit_available->printable, OBJ );
+            set_cell( fruit_available, OBJ );
         }
 
     }
-    printf( "fruit\n" );
 
     return NULL;
 }

@@ -2,22 +2,22 @@
 #define ITEM_H
 
 #include "characters.h"
+#include "set.h"
 
 #define MAX_COINS 10
 #define MAX_FRUITS 5
 
-typedef struct {
-    pos *pos;
-    status *printable;
-    unsigned int available:1;
- } item;
+typedef enum { _FRUIT_, _COIN_, _BOSTA_ } ITEM;
 
-
-item *create_coin( void );
-item *create_fruits( void );
+obj *create_item( ITEM );
+void clean_item( cell* );
 
 void init_fruits( void );
-item *find_available( void );
-void *handle_fruits( void *a );
+void init_coins( void );
+
+obj *find_available( obj*, int );
+void *handle_fruits( void* );
+void *handle_coins( void* );
+
 
 #endif // ITEM_H

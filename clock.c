@@ -10,9 +10,9 @@ static clock_game time_of_match = { 0, 0, 0 };
 void get_time_of_day( char *format )
 {
     if ( time_of_match.hrs < 10 ) {
-            sprintf( format, "0%d", time_of_match.hrs );
+        sprintf( format, "0%d", time_of_match.hrs );
     } else {
-            sprintf( format, ":%d", time_of_match.hrs );
+        sprintf( format, ":%d", time_of_match.hrs );
     }
 
     if ( time_of_match.min < 10 ) {

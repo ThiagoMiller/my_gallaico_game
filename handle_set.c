@@ -3,6 +3,7 @@
 #include "jogo2.h"
 #include "clock.h"
 #include "gallego.h"
+#include "audio.h"
 
 #include <stdio.h>
 #include <unistd.h>
@@ -26,7 +27,7 @@ void print_set( void )
     cell *celula;
     status *printable; // *_default_status = &default_status;
 
-	printf( CLEAN RESPAWN  VERTICAL_BORDER );
+	printf( CLEAN VERTICAL_BORDER );
     //printf( CLEAN BEGIN VERTICAL_BORDER );
 
     printf( LEFT_BORDER BLUE_B "TIME: %s\n\n" RESET ,format );
@@ -51,7 +52,8 @@ void print_set( void )
 	for ( i = 0; i < WIDTH * 2 + 5; i++ )
 		printf( WHITE_B " " RESET);
 
-	//printf( "\n" LEFT_BORDER YELLOW "MOEDAS:" RESET" %d", get_score() );
+	printf( "\n\n" LEFT_BORDER YELLOW "SCORE:" RESET" %d", get_score() );
+	printf( "\t\t  " "%s" RESET, get_bosta_format() );
 	printf( VERTICAL_BORDER );
 
   //update_audio();
@@ -62,6 +64,7 @@ void* handle_set( void *a )
 {
     while ( !is_hero_dead() ) {
         print_set();
+        update_audio();
         usleep( 1000000/24 );
     }
     print_set();
@@ -70,19 +73,19 @@ void* handle_set( void *a )
 }
 
 
-void set_cell( pos next_pos, status *printable, TYPE_BODY body )
+void set_cell( obj *obj, TYPE_BODY body )
 {
     if ( body == CHAR )
-        for_this_match[next_pos.row][next_pos.col].layer0 = printable;
+        for_this_match[obj->pos->row][obj->pos->col].layer0 = obj->printable;
     else
-        for_this_match[next_pos.row][next_pos.col].layer1 = printable;
+        for_this_match[obj->pos->row][obj->pos->col].layer1 = obj->printable;
 }
 
-void unset_cell( pos actual_pos, TYPE_BODY body ) {
+void unset_cell( pos *actual_pos, TYPE_BODY body ) {
     if ( body == CHAR )
-        for_this_match[actual_pos.row][actual_pos.col].layer0 = NULL;
+        for_this_match[actual_pos->row][actual_pos->col].layer0 = NULL;
     else
-        for_this_match[actual_pos.row][actual_pos.col].layer1 = NULL;
+        for_this_match[actual_pos->row][actual_pos->col].layer1 = NULL;
 }
 
 cell *get_cell( pos pos )
@@ -96,12 +99,13 @@ void init_arena( void )
   for_this_match = create_arena();
 }
 
-void move_to( pos actual_pos, pos next_pos, status *printable )
+void move_to( obj *obj, pos next_pos )
 {
     lock();
 
-    unset_cell( actual_pos, CHAR );
-    set_cell( next_pos, printable, CHAR );
+    unset_cell( obj->pos, CHAR );
+    *obj->pos = next_pos;
+    set_cell( obj, CHAR );
 
     unlock();
 }

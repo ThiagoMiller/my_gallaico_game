@@ -12,7 +12,7 @@
 #include <errno.h>
 #include <pthread.h>
 
-static pthread_t t_monster, t_hero, t_set, t_clock, t_fruit;
+static pthread_t t_monster, t_hero, t_set, t_clock, t_fruit, t_coin;
 static pthread_mutex_t move_lock = PTHREAD_MUTEX_INITIALIZER;
 
 int s;
@@ -40,6 +40,9 @@ void init_threads()
 
     if ( pthread_create( &t_fruit, NULL, handle_fruits, NULL ) == -1 )
         error( "Can't create thread for fruit" );
+
+    if ( pthread_create( &t_coin, NULL, handle_coins, NULL ) == -1 )
+        error( "Can't create thread for coins" );
 }
 
 void join_threads()
@@ -63,6 +66,9 @@ void join_threads()
         s = pthread_cancel( t_fruit );
         if ( s ) error( "Can't stop the t_fruit thread..." );
 
+        s = pthread_cancel( t_coin );
+        if ( s ) error( "Can't stop the t_coin thread..." );
+
     } else {
 
         s = pthread_join( t_monster, &result );
@@ -76,6 +82,9 @@ void join_threads()
 
         s = pthread_join( t_fruit, &result );
         if ( s ) error( "Can't join thread for t_fruit" );
+
+        s = pthread_join( t_coin, &result );
+        if ( s ) error( "Can't join thread for t_coin" );
     }
 }
 

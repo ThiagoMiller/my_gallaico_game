@@ -11,17 +11,16 @@ typedef struct {
 } flag;*/
 
 typedef struct {
-    pos *pos;
- //   flag *flag;
-    status *printable;
+    obj *obj;
+    unsigned int stepped_in_shit:1;
 } monster;
+
 
 monster *create_monster( pos* );
 
 void init_monster( void );
 void* handle_monster( void* );
 pos get_monster_pos( void );
-void set_monster_pos( pos );
 
 
 #endif // MONSTER_H

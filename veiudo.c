@@ -3,23 +3,22 @@
 #include <stdlib.h>
 #include <string.h>
 
-static char *wet_color = SAGOL BLUE_B;
-static char *shitted_color = SAGOL BROWN_B;
-static char *stopped_color = SAGOL YELLOW_B;
-static char *default_color = SAGOL;
+extern char *state_color[];
 
 monster *create_monster( pos *pos )
 {
     monster *veiudo = ( monster* )malloc( sizeof( monster ) );
  //   veiudo->flag = ( flag* )malloc( sizeof( flag ) );
-    veiudo->printable = ( status* )malloc( sizeof( status ) );
+    veiudo->obj = ( obj* )malloc( sizeof( obj ) );
+    veiudo->obj->printable = ( status* )malloc( sizeof( status ) );
 
-    veiudo->pos = pos;
+    veiudo->obj->pos = pos;
+    veiudo->stepped_in_shit = 0;
 
     //veiudo->flag->wet = 0, veiudo->flag->stopped = 0, veiudo->flag->shitted = 0;
 
-    veiudo->printable->body = MONSTER;
-    veiudo->printable->color = strdup( default_color );
+    veiudo->obj->printable->body = MONSTER;
+    veiudo->obj->printable->color = state_color[DEFAULT_MONSTER_COLOR];
 
     return veiudo;
 }

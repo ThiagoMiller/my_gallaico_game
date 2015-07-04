@@ -2,6 +2,8 @@
 #include "gallego.h"
 #include "set.h"
 #include "jogo2.h"
+#include "item.h"
+#include "audio.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -11,22 +13,20 @@
 #define WAIT  1700000 // 1,7 seg
 #define DELAY 450000 // 0,45 segs
 
+extern char *state_color[];
+
 monster *veiudo;
 
 pos get_monster_pos( void )
 {
-    return *veiudo->pos;
+    return *veiudo->obj->pos;
 }
 
-void set_monster_pos( pos pos)
-{
-  veiudo->pos->col = pos.col, veiudo->pos->row = pos.row;
-}
 
 void init_monster( void )
 {
     veiudo = create_monster( raffle() );
-    set_cell( *veiudo->pos, veiudo->printable, CHAR );
+    set_cell( veiudo->obj, CHAR );
 }
 
 void _monster_moviment_default( pos *gallego_pos, pos *monster_pos, pos *next_pos )
@@ -108,30 +108,79 @@ static void move( pos next_pos )
 
 */
 
+void maybe_monster_wants_stop( void )
+{
+    int rand_sound = get_rand( 20 );
+    if (  rand_sound > 17 /*&& !is_monster_wet()*/ ) {
+        veiudo->obj->printable->color = state_color[STOPPED_UP_COLOR];
+        if ( rand_sound == 18 ) play_owyeh();
+        else play_madrecita();
+        usleep(1000000);
+        veiudo->obj->printable->color = state_color[DEFAULT_MONSTER_COLOR];
+    }
+}
+
+
 void* handle_monster( void *a )
  {
-    //status printable;
+    cell *destiny;
+    pos gallego_pos, monster_pos, next_pos;
 
     usleep( WAIT );
 
 	while ( !is_hero_dead() ) {
 
-        pos gallego_pos = get_hero_pos(), monster_pos = get_monster_pos(), next_pos = get_monster_pos();
+        maybe_monster_wants_stop();
 
-       // maybe_monster_wants_stop();
+        gallego_pos = get_hero_pos(), monster_pos = get_monster_pos(), next_pos = get_monster_pos();
 
         search_hero( _monster_moviment_default, &gallego_pos, &monster_pos, &next_pos );
 
-        if ( gallego_pos.row == next_pos.row && gallego_pos.col == next_pos.col ) {
-            free( veiudo->printable->color );
-            veiudo->printable->color = strdup( RED );
-            veiudo->printable->body = DEAD;
+        destiny = get_cell( next_pos );
+
+        if ( destiny->layer0 != NULL && destiny->layer0->body == HERO ) {
+            veiudo->obj->printable->color = state_color[DEAD_COLOR];
+            veiudo->obj->printable->body = DEAD;
             hero_dead();
         }
+        else if ( destiny->layer1 != NULL ) {
+            switch ( destiny->layer1->body ) {
+            case BOSTA :
+                score_up( 3 );
+               /* clean_item( destiny );
+                veiudo->obj->printable->color = state_color[STEP_IN_SHIT_COLOR];
+                veiudo->stepped_in_shit = 1;
+                play_wet();
+                break;*/
+            case L_BOSTA :
+                score_up( 2 );
+                clean_item( destiny );
+                veiudo->obj->printable->color = state_color[STEP_IN_SHIT_COLOR];
+                veiudo->stepped_in_shit = 1;
+                play_wet();
+                break;
+            }
+            /*if ( destiny->layer1->body == BOSTA ) {
+                score_up( 5 );
+                clean_item( destiny );
+            }
+            else if ( destiny->layer1->body == L_BOSTA ) {
+                score_up( 2 );
+                clean_item( destiny );
+            }*/
+        }
 
-        move_to( monster_pos, next_pos, veiudo->printable );
 
-        set_monster_pos( next_pos );
+        play_monstro();
+        move_to( veiudo->obj, next_pos );
+
+        if ( veiudo->stepped_in_shit ) {
+            usleep( 1500000 );
+            veiudo->obj->printable->color = state_color[DEFAULT_MONSTER_COLOR];
+            veiudo->stepped_in_shit = 0;
+        }
+
+
       /*  if ( get_( next_pos.row, next_pos.col ) == BOSTA ) {
             score_up();
             pisou_na_bosta();

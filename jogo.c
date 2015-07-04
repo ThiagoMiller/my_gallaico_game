@@ -3,6 +3,7 @@
 #include "gallego.h"
 #include "veiudo.h"
 #include "item.h"
+#include "bosta.h"
 
 #include <stdio.h>
 #include <unistd.h>
@@ -16,6 +17,8 @@ void build_set( void )
     init_hero();
     init_monster();
     init_fruits();
+    init_coins();
+    init_bosta();
 
     print_set();
 }

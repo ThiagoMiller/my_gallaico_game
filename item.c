@@ -5,40 +5,62 @@
 #include <string.h>
 #include <unistd.h>
 
-
-item *create_coin( void )
+obj *create_item( ITEM item )
 {
-    item *coins = ( item* )calloc( MAX_COINS, sizeof( item ) );
+    int max_item;
+    char body, *color;
 
-    status *printable = (status*)malloc( sizeof( status ) ); //colocar no characters.c
-    printable->body = COIN;
-    printable->color = strdup( YELLOW );
-
-    int i;
-    for ( i = 0; i < MAX_COINS; i++ ) {
-        ( coins + i )->pos = NULL;
-        ( coins + i )->printable = printable;
-        ( coins + i )->available = 1;
+    if ( item == _COIN_ ) {
+        max_item = MAX_COINS;
+        body = COIN;
+        color = strdup( YELLOW );
+    }
+    else if ( item == _FRUIT_ ) {
+        max_item = MAX_FRUITS;
+        body = FRUIT;
+        color = NULL;
+    }
+    else {
+        max_item = WIDTH * HEIGHT;
+        body = BOSTA;
+        color = strdup( BROWN );
     }
 
-    return coins;
+    obj *item_obj = ( obj* )calloc( max_item, sizeof( obj ) );
+
+    int i;
+    for ( i = 0; i < max_item; i++ ) {
+        ( item_obj + i )->pos = NULL;
+        ( item_obj + i )->printable = (status*)malloc( sizeof( status ) );
+        ( item_obj + i )->printable->body = body;
+        ( item_obj + i )->printable->color = color;
+        ( item_obj + i )->printable->available = 1;
+    }
+
+    return item_obj;
 }
 
-item *create_fruits( void )
+obj *find_available( obj *item, int max_item )
 {
-    item *fruits = ( item* )calloc( MAX_FRUITS, sizeof( item ) );
-    status *printable;
+    obj *available = NULL;
 
     int i;
-    for ( i = 0; i < MAX_FRUITS; i++ ) {
-        ( fruits + i )->pos = NULL;
-        ( fruits + i )->printable = (status*)malloc( sizeof( status ) );
-        ( fruits + i )->printable->body = FRUIT;
-        ( fruits + i )->printable->color = NULL;
-        ( fruits + i )->available = 1;
+    for ( i = 0; i < max_item; i++, item++ ) {
+        if ( item->printable->available ) {
+            available = item;
+            available->printable->available = 0;
+            break;
+        }
     }
 
-    return fruits;
+    return available;
+}
+
+
+void clean_item( cell *item )
+{
+    item->layer1->available = 1;
+    item->layer1 = NULL;
 }
 
 

@@ -39,6 +39,14 @@
 		<Unit filename="audio.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="audio.h" />
+		<Unit filename="bosta.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="bosta.h" />
+		<Unit filename="characters.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="characters.h" />
 		<Unit filename="clock.c">
 			<Option compilerVar="CC" />
@@ -52,6 +60,9 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="getch.h" />
+		<Unit filename="handle_coin.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="handle_fruits.c">
 			<Option compilerVar="CC" />
 		</Unit>
