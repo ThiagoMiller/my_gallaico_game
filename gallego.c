@@ -23,6 +23,7 @@ hero *create_hero( pos *pos )
     gallego->cagating = 0;
     gallego->cagated = 0;
     gallego->limpping = 0;
+    gallego->trapped = 0;
     gallego->eated_fruts = 0;
     gallego->score = 0;
     gallego->dead = 0;

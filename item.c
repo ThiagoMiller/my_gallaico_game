@@ -5,6 +5,12 @@
 #include <string.h>
 #include <unistd.h>
 
+char *item_colors[] = {
+    YELLOW,
+    BROWN,
+    BLUE
+};
+
 obj *create_item( ITEM item )
 {
     int max_item;
@@ -13,17 +19,22 @@ obj *create_item( ITEM item )
     if ( item == _COIN_ ) {
         max_item = MAX_COINS;
         body = COIN;
-        color = strdup( YELLOW );
+        color = item_colors[_COIN_];
     }
     else if ( item == _FRUIT_ ) {
         max_item = MAX_FRUITS;
         body = FRUIT;
         color = NULL;
     }
+    else if ( item == _TRAP_ ) {
+        max_item = QNT_TRAPS;
+        body = TRAP;
+        color = item_colors[_TRAP_];
+    }
     else {
         max_item = WIDTH * HEIGHT;
         body = BOSTA;
-        color = strdup( BROWN );
+        color = item_colors[_BOSTA_];
     }
 
     obj *item_obj = ( obj* )calloc( max_item, sizeof( obj ) );

@@ -11,5 +11,7 @@ char *state_color[] = {
     YELLOW_B RED,
     SAGOL BROWN_B,
     SAGOL YELLOW_B,
-    SAGOL BLUE_B
+    SAGOL BLUE_B,
+    BOLDYELLOW BLUE_B,
+    BOLDGREEN BLUE_B
 };

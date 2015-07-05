@@ -42,6 +42,8 @@ void call_game( void )
 
     join_threads();
 
+    clean_up_threads();
+
     release_main_audio();
 }
 
@@ -69,6 +71,8 @@ int main()
                     e = e == 2 ? 2 : e + 1;
                     play_menu_ch();
                     break;
+                default :
+                    continue;
             }
 
             print_menu();

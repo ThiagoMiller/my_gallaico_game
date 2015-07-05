@@ -7,7 +7,7 @@
 #define MAX_COINS 10
 #define MAX_FRUITS 5
 
-typedef enum { _FRUIT_, _COIN_, _BOSTA_ } ITEM;
+typedef enum { _COIN_, _BOSTA_, _TRAP_, _FRUIT_ } ITEM;
 
 obj *create_item( ITEM );
 void clean_item( cell* );

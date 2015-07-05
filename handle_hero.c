@@ -5,6 +5,7 @@
 #include "getch.h"
 #include "bosta.h"
 #include "item.h"
+#include "trap.h"
 #include "audio.h"
 
 #include <stdio.h>
@@ -61,7 +62,7 @@ void trying_cagate(void)
 
 void score_up( int score )
 {
-    gallego->score += score;
+    gallego->score = (int)( gallego->score + score ) < 0 ? 0 : ( gallego->score + score );
 }
 
 char *get_bosta_format( void )
@@ -125,6 +126,8 @@ int is_hero_limpping(void)
 */
 void maybe_gallego_is_limpping( void )
 {
+    if ( gallego->trapped ) return;
+
     int rand_sound = get_rand( 40 );
     if ( rand_sound > 37 ) {
         gallego->obj->printable->color = state_color[LIMP_COLOR];
@@ -143,7 +146,8 @@ static void move( pos *next_pos )
             next_pos->col < WIDTH       &&
             next_pos->row >= 0          &&
             next_pos->row < HEIGHT      &&
-            !gallego->limpping             )
+            !gallego->limpping          &&
+            !gallego->trapped               )
     {
         if ( gallego->cagating ) {
             gallego->cagating = 0;
@@ -183,6 +187,10 @@ static void move( pos *next_pos )
                 gallego->cagated = 1;
                 clean_item( destiny );
                 break;
+            case TRAP :
+                score_up( -10 );
+                gallego->trapped = 1;
+                gallego->obj->printable->color = state_color[TRAPPED_COLOR];
             }
         }
            /* if ( destiny->layer1->body == FRUIT ) {
@@ -245,7 +253,24 @@ static void move( pos *next_pos )
             usleep(100000);
             gallego->obj->printable->color = state_color[DEFAULT_HERO_COLOR];
             gallego->limpping = 0;
-        } else {
+        }
+        else if ( gallego->trapped ) {
+            static int acm = 0;
+
+            gallego->obj->printable->color = state_color[TRY_GO_OUT_TRAP];
+            usleep(100000);
+            gallego->obj->printable->color = state_color[TRAPPED_COLOR];
+
+            if ( ++acm == 8 ) {
+                acm = 0;
+                gallego->trapped = 0;
+                gallego->obj->printable->color = state_color[DEFAULT_HERO_COLOR];
+                clean_item( get_cell( *next_pos ) );
+                minus_trap();
+            }
+            play_limite();
+        }
+        else {
             play_limite();
         }
     /*    if ( is_gallego_trying_cagate() ) {

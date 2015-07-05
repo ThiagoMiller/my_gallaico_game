@@ -8,7 +8,7 @@
 #include <string.h>
 #include <unistd.h>
 
-#define NUM_FRUIT_COLOR 6
+#define NUM_FRUIT_COLOR 5
 
 static obj *fruits;
 
@@ -17,7 +17,6 @@ static char *fruit_colors[] = {
     GREEN,
     YELLOW,
     WHITE,
-    BLUE,
     MAGENTA,
 };
 
@@ -39,10 +38,10 @@ void *handle_fruits( void *a )
 
             fruit_available->pos = raffle();
 
-            if ( fruit_available->printable->color != NULL )
-                free( fruit_available->printable->color );
+            //if ( fruit_available->printable->color != NULL )
+             //   free( fruit_available->printable->color );
 
-            fruit_available->printable->color = strdup( fruit_colors[ get_rand( NUM_FRUIT_COLOR ) ] );
+            fruit_available->printable->color = fruit_colors[ get_rand( NUM_FRUIT_COLOR ) ];
 
             set_cell( fruit_available, OBJ );
         }

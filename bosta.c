@@ -3,8 +3,6 @@
 #include "set.h"
 #include "jogo2.h"
 #include "gallego.h"
-#include "item.h"
-#include "set.h"
 
 #include <stdio.h>
 #include <stdlib.h>

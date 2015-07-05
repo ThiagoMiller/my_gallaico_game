@@ -19,6 +19,7 @@ typedef struct {
     unsigned int cagating:1;
     unsigned int cagated:1;
     unsigned int limpping:1;
+    unsigned int trapped:1;
     unsigned int dead:1;
     unsigned int eated_fruts:2;
     unsigned int score;

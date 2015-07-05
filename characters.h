@@ -4,7 +4,7 @@
 #define HEIGHT 14
 #define WIDTH 16
 #define QNT_COINS 3
-#define QNT_TRAPS 10
+#define QNT_TRAPS 22
 #define QNT_FRUIT 3
 
 // reset color
@@ -79,7 +79,9 @@ enum state {
     DEAD_COLOR,
     STEP_IN_SHIT_COLOR,
     STOPPED_UP_COLOR,
-    WET_COLOR
+    WET_COLOR,
+    TRAPPED_COLOR,
+    TRY_GO_OUT_TRAP
 };
 
 

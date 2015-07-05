@@ -4,6 +4,7 @@
 #include "veiudo.h"
 #include "item.h"
 #include "bosta.h"
+#include "trap.h"
 
 #include <stdio.h>
 #include <unistd.h>
@@ -19,6 +20,7 @@ void build_set( void )
     init_fruits();
     init_coins();
     init_bosta();
+    init_trap();
 
     print_set();
 }
