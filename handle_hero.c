@@ -7,6 +7,7 @@
 #include "item.h"
 #include "trap.h"
 #include "audio.h"
+#include "stat.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -14,6 +15,7 @@
 #include <unistd.h>
 
 extern char *state_color[];
+extern stat_game *stat;
 
 static hero *gallego;
 
@@ -52,6 +54,7 @@ void trying_cagate(void)
     if ( gallego->eated_fruts == 3 ) {
         gallego->eated_fruts = 0;
         rebosteio( *gallego->obj->pos );
+        stat->cagate++;
         gallego->obj->printable->color = state_color[ CAGATE_COLOR ];
         gallego->cagating = 1;
     //  cagate();
@@ -132,6 +135,7 @@ void maybe_gallego_is_limpping( void )
     if ( rand_sound > 37 ) {
         gallego->obj->printable->color = state_color[LIMP_COLOR];
         gallego->limpping = 1;
+        stat->limp++;
         if ( rand_sound == 38 ) play_mancando1();
         else play_mancando2();
     }
@@ -168,27 +172,32 @@ static void move( pos *next_pos )
                 if ( gallego->eated_fruts < 3 )
                     gallego->eated_fruts++;
                 score_up( 1 );
+                stat->eat++;
                 clean_item( destiny );
                 break;
             case COIN :
                 score_up( 3 );
+                stat->coin++;
                 clean_item( destiny );
                 play_action_moeda();
                 break;
             case BOSTA :
                 down_bosta( destiny->layer1 );
                 score_up( -2 );
+                stat->hero_step_big_shit++;
                 gallego->obj->printable->color = state_color[CAGATED_COLOR];
                 gallego->cagated = 1;
                 break;
             case L_BOSTA :
                 score_up( -1 );
+                stat->hero_step_in_small_shit++;
                 gallego->obj->printable->color = state_color[CAGATED_COLOR];
                 gallego->cagated = 1;
                 clean_item( destiny );
                 break;
             case TRAP :
                 score_up( -10 );
+                stat->trap++;
                 gallego->trapped = 1;
                 gallego->obj->printable->color = state_color[TRAPPED_COLOR];
             }
@@ -228,6 +237,7 @@ static void move( pos *next_pos )
 
 */
         play_action_walking();
+        stat->hero_walk++;
         move_to( gallego->obj, *next_pos );
 
         if ( gallego->cagated ) {

@@ -15,7 +15,6 @@ typedef struct {
 
 typedef struct {
     obj *obj;
-   // flag *flag;
     unsigned int cagating:1;
     unsigned int cagated:1;
     unsigned int limpping:1;

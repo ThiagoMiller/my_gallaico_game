@@ -20,6 +20,7 @@ hero *create_hero( pos *pos )
 
     gallego->obj->printable->body = HERO;
     gallego->obj->printable->color = state_color[DEFAULT_HERO_COLOR];
+
     gallego->cagating = 0;
     gallego->cagated = 0;
     gallego->limpping = 0;

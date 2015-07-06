@@ -94,6 +94,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="thread.h" />
+		<Unit filename="trap.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="trap.h" />
 		<Unit filename="veiudo.c">
 			<Option compilerVar="CC" />
 		</Unit>

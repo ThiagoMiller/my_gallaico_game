@@ -4,6 +4,7 @@
 #include "jogo2.h"
 #include "item.h"
 #include "audio.h"
+#include "stat.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -14,6 +15,7 @@
 #define DELAY 450000 // 0,45 segs
 
 extern char *state_color[];
+extern stat_game *stat;
 
 monster *veiudo;
 
@@ -113,6 +115,7 @@ void maybe_monster_wants_stop( void )
     int rand_sound = get_rand( 20 );
     if (  rand_sound > 17 /*&& !is_monster_wet()*/ ) {
         veiudo->obj->printable->color = state_color[STOPPED_UP_COLOR];
+        stat->provocate++;
         if ( rand_sound == 18 ) play_owyeh();
         else play_madrecita();
         usleep(1000000);
@@ -146,14 +149,16 @@ void* handle_monster( void *a )
         else if ( destiny->layer1 != NULL ) {
             switch ( destiny->layer1->body ) {
             case BOSTA :
-                score_up( 3 );
-               /* clean_item( destiny );
+                score_up( 5 );
+                stat->monster_step_in_big_shit++;
+                clean_item( destiny );
                 veiudo->obj->printable->color = state_color[STEP_IN_SHIT_COLOR];
                 veiudo->stepped_in_shit = 1;
                 play_wet();
-                break;*/
+                break;
             case L_BOSTA :
                 score_up( 2 );
+                stat->monster_step_in_small_shit++;
                 clean_item( destiny );
                 veiudo->obj->printable->color = state_color[STEP_IN_SHIT_COLOR];
                 veiudo->stepped_in_shit = 1;
@@ -172,6 +177,7 @@ void* handle_monster( void *a )
 
 
         play_monstro();
+        stat->monster_walk++;
         move_to( veiudo->obj, next_pos );
 
         if ( veiudo->stepped_in_shit ) {

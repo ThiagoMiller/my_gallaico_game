@@ -5,6 +5,7 @@
 #include "item.h"
 #include "bosta.h"
 #include "trap.h"
+#include "stat.h"
 
 #include <stdio.h>
 #include <unistd.h>
@@ -21,6 +22,7 @@ void build_set( void )
     init_coins();
     init_bosta();
     init_trap();
+    init_stat_game();
 
     print_set();
 }

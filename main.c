@@ -33,7 +33,9 @@ void call_game( void )
     init_main_fmod();
 
     printf( CLEAN  );
-    printf( "\n" LEFT_BORDER "    " PINK " VAI COMEÇAR A BAIXARIA!\n" RESET );
+    puts("");
+    //printf( "\n" LEFT_BORDER "    " PINK " VAI COMEÇAR A BAIXARIA!\n" RESET );
+    system( "toilet --gay -f mini 'vai começar a baixaria...'" );
     sleep(2);
 
     build_set();
