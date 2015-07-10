@@ -162,7 +162,7 @@ static void move( pos *next_pos )
 
         if ( destiny->layer0 != NULL && destiny->layer0->body == MONSTER) {
            // free( gallego->obj->printable->color );
-            gallego->obj->printable->color = state_color[ DEAD_COLOR ];
+            gallego->obj->printable->color = state_color[ WET_COLOR ];
             gallego->obj->printable->body = DEAD;
             hero_dead();
         }
@@ -313,8 +313,9 @@ void init_hero()
 void* handle_hero( void *a )
 {
     pos next_pos = get_hero_pos();
-    int direction;
-    while ( ( direction = getch() ) != 'q' && !is_hero_dead() ) {
+    int direction = 0;
+    while ( direction != 'q' && !is_hero_dead() ) {
+        direction = getch();
         switch( direction ) {
             case 'w' :
                 next_pos.row --;
@@ -328,6 +329,8 @@ void* handle_hero( void *a )
             case 'd' :
                 next_pos.col ++;
                 break;
+            case 'q' :
+                continue;
             case ' ' :
                 trying_cagate();
                 continue;

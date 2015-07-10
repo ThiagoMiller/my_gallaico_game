@@ -1,4 +1,5 @@
 #include "clock.h"
+#include "gallego.h"
 
 #include <stdio.h>
 #include <unistd.h>
@@ -37,7 +38,7 @@ void* handle_time( void *a )
 {
     int elapsed = 0, sec = 0, min = 0, MIN = 0, hrs = 0, d = 0, f = 0;
 
-    while ( !is_hero_dead() ) {
+    while ( /*!is_hero_dead() */1 ) {
 
         usleep( 1000000 );
 		elapsed++;

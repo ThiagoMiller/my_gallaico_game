@@ -45,7 +45,7 @@
 #define BEGIN "\033[0;0H"
 
 // borders
-#define LEFT_BORDER "\t\t\t"
+#define LEFT_BORDER "\t"
 #define VERTICAL_BORDER "\n\n"
 
 typedef struct {

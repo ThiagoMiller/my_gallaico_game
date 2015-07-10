@@ -90,6 +90,10 @@
 		<Unit filename="set2.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="stat.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="stat.h" />
 		<Unit filename="thread.c">
 			<Option compilerVar="CC" />
 		</Unit>

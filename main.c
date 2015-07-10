@@ -93,9 +93,10 @@ int main()
 
     }
 
-    printf( CLEAN );
-    resetTermios();
     release_menu_audio();
+    resetTermios();
+
+    printf( CLEAN );
 
     return 0;
 }

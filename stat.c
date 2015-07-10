@@ -25,6 +25,8 @@ stat_game *create_stat_game( void )
     return stat;
 }
 
+
+
 void init_stat_game( void )
 {
     stat = create_stat_game();

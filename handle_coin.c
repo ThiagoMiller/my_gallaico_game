@@ -18,7 +18,7 @@ void init_coins( void )
 void *handle_coins( void *a )
 {
     obj *coin_available;
-    while ( !is_hero_dead() ) {
+    while ( /*!is_hero_dead()*/ 1 ) {
         usleep( 9000000 );
         if ( ( coin_available = find_available( coins, MAX_COINS ) ) != NULL ) {
             if ( coin_available->pos != NULL )

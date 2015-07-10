@@ -28,7 +28,7 @@ void init_fruits( void )
 void *handle_fruits( void *a )
 {
     obj *fruit_available;
-    while ( !is_hero_dead() ) {
+    while ( /*!is_hero_dead()*/1 ) {
 
         usleep( 5000000 );
 

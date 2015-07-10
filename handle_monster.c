@@ -5,6 +5,7 @@
 #include "item.h"
 #include "audio.h"
 #include "stat.h"
+#include "thread.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -131,11 +132,11 @@ void* handle_monster( void *a )
 
     usleep( WAIT );
 
-	while ( !is_hero_dead() ) {
+	while ( /*!is_hero_dead() */ 1 ) {
 
         maybe_monster_wants_stop();
 
-        gallego_pos = get_hero_pos(), monster_pos = get_monster_pos(), next_pos = get_monster_pos();
+        gallego_pos = get_hero_pos(), monster_pos = next_pos = get_monster_pos();
 
         search_hero( _monster_moviment_default, &gallego_pos, &monster_pos, &next_pos );
 
@@ -145,6 +146,7 @@ void* handle_monster( void *a )
             veiudo->obj->printable->color = state_color[DEAD_COLOR];
             veiudo->obj->printable->body = DEAD;
             hero_dead();
+            cancel_hero_thread();
         }
         else if ( destiny->layer1 != NULL ) {
             switch ( destiny->layer1->body ) {

@@ -121,7 +121,7 @@
 	<unistd.h>
 	<jogo.h>
 
-1436047426 source:/home/thiago/workspace/Repositórios/my_gallaico_game/main.c
+1436236617 source:/home/thiago/workspace/Repositórios/my_gallaico_game/main.c
 	"jogo2.h"
 	"thread.h"
 	"getch.h"
@@ -144,7 +144,7 @@
 	<time.h>
 	<jogo.h>
 
-1436071395 source:/home/thiago/workspace/Repositórios/my_gallaico_game/thread.c
+1436509790 source:/home/thiago/workspace/Repositórios/my_gallaico_game/thread.c
 	"thread.h"
 	"gallego.h"
 	"veiudo.h"
@@ -158,7 +158,7 @@
 	<errno.h>
 	<pthread.h>
 
-1435995739 source:/home/thiago/workspace/Repositórios/my_gallaico_game/audio.c
+1436229104 source:/home/thiago/workspace/Repositórios/my_gallaico_game/audio.c
 	"audio.h"
 	<stdio.h>
 	<unistd.h>
@@ -166,8 +166,9 @@
 	<fmod.h>
 	<fmod_errors.h>
 
-1435898538 source:/home/thiago/workspace/Repositórios/my_gallaico_game/clock.c
+1436508359 source:/home/thiago/workspace/Repositórios/my_gallaico_game/clock.c
 	"clock.h"
+	"gallego.h"
 	<stdio.h>
 	<unistd.h>
 
@@ -177,13 +178,13 @@
 	<string.h>
 	<unistd.h>
 
-1435967431 source:/home/thiago/workspace/Repositórios/my_gallaico_game/gallego.c
+1436229104 source:/home/thiago/workspace/Repositórios/my_gallaico_game/gallego.c
 	"gallego.h"
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 
-1436154268 source:/home/thiago/workspace/Repositórios/my_gallaico_game/handle_hero.c
+1436507878 source:/home/thiago/workspace/Repositórios/my_gallaico_game/handle_hero.c
 	"gallego.h"
 	"veiudo.h"
 	"jogo2.h"
@@ -193,22 +194,23 @@
 	"item.h"
 	"trap.h"
 	"audio.h"
+	"stat.h"
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	<unistd.h>
 
-1435651326 /home/thiago/workspace/Repositórios/my_gallaico_game/clock.h
+1436229104 /home/thiago/workspace/Repositórios/my_gallaico_game/clock.h
 
-1436155234 /home/thiago/workspace/Repositórios/my_gallaico_game/gallego.h
+1436229104 /home/thiago/workspace/Repositórios/my_gallaico_game/gallego.h
 	"characters.h"
 
-1436082062 /home/thiago/workspace/Repositórios/my_gallaico_game/characters.h
+1436236782 /home/thiago/workspace/Repositórios/my_gallaico_game/characters.h
 
-1435651326 /home/thiago/workspace/Repositórios/my_gallaico_game/jogo2.h
+1436229104 /home/thiago/workspace/Repositórios/my_gallaico_game/jogo2.h
 	"characters.h"
 
-1435987417 source:/home/thiago/workspace/Repositórios/my_gallaico_game/handle_set.c
+1436509283 source:/home/thiago/workspace/Repositórios/my_gallaico_game/handle_set.c
 	"set.h"
 	"thread.h"
 	"jogo2.h"
@@ -218,10 +220,10 @@
 	<stdio.h>
 	<unistd.h>
 
-1436155681 /home/thiago/workspace/Repositórios/my_gallaico_game/set.h
+1436229104 /home/thiago/workspace/Repositórios/my_gallaico_game/set.h
 	"characters.h"
 
-1436075157 source:/home/thiago/workspace/Repositórios/my_gallaico_game/jogo.c
+1436229104 source:/home/thiago/workspace/Repositórios/my_gallaico_game/jogo.c
 	"jogo2.h"
 	"set.h"
 	"gallego.h"
@@ -229,42 +231,45 @@
 	"item.h"
 	"bosta.h"
 	"trap.h"
+	"stat.h"
 	<stdio.h>
 	<unistd.h>
 	<time.h>
 	<stdlib.h>
 
-1436046288 /home/thiago/workspace/Repositórios/my_gallaico_game/thread.h
+1436509627 /home/thiago/workspace/Repositórios/my_gallaico_game/thread.h
 
-1435651326 source:/home/thiago/workspace/Repositórios/my_gallaico_game/set2.c
+1436229104 source:/home/thiago/workspace/Repositórios/my_gallaico_game/set2.c
 	"set.h"
 	<stdio.h>
 	<stdlib.h>
 
-1435651326 /home/thiago/workspace/Repositórios/my_gallaico_game/getch.h
+1436229104 /home/thiago/workspace/Repositórios/my_gallaico_game/getch.h
 
-1435972741 source:/home/thiago/workspace/Repositórios/my_gallaico_game/handle_monster.c
+1436508335 source:/home/thiago/workspace/Repositórios/my_gallaico_game/handle_monster.c
 	"veiudo.h"
 	"gallego.h"
 	"set.h"
 	"jogo2.h"
 	"item.h"
 	"audio.h"
+	"stat.h"
+	"thread.h"
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	<unistd.h>
 
-1435971408 /home/thiago/workspace/Repositórios/my_gallaico_game/veiudo.h
+1436229104 /home/thiago/workspace/Repositórios/my_gallaico_game/veiudo.h
 	<characters.h>
 
-1435972080 source:/home/thiago/workspace/Repositórios/my_gallaico_game/veiudo.c
+1436229104 source:/home/thiago/workspace/Repositórios/my_gallaico_game/veiudo.c
 	"veiudo.h"
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 
-1436076643 source:/home/thiago/workspace/Repositórios/my_gallaico_game/handle_fruits.c
+1436508889 source:/home/thiago/workspace/Repositórios/my_gallaico_game/handle_fruits.c
 	"item.h"
 	"set.h"
 	"jogo2.h"
@@ -274,18 +279,18 @@
 	<string.h>
 	<unistd.h>
 
-1436075746 /home/thiago/workspace/Repositórios/my_gallaico_game/item.h
+1436229104 /home/thiago/workspace/Repositórios/my_gallaico_game/item.h
 	"characters.h"
 	"set.h"
 
-1436085847 source:/home/thiago/workspace/Repositórios/my_gallaico_game/item.c
+1436229104 source:/home/thiago/workspace/Repositórios/my_gallaico_game/item.c
 	"item.h"
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	<unistd.h>
 
-1435815480 source:/home/thiago/workspace/Repositórios/my_gallaico_game/handle_coin.c
+1436509187 source:/home/thiago/workspace/Repositórios/my_gallaico_game/handle_coin.c
 	"item.h"
 	"set.h"
 	"jogo2.h"
@@ -295,7 +300,7 @@
 	<string.h>
 	<unistd.h>
 
-1436075015 source:/home/thiago/workspace/Repositórios/my_gallaico_game/bosta.c
+1436229104 source:/home/thiago/workspace/Repositórios/my_gallaico_game/bosta.c
 	"bosta.h"
 	"item.h"
 	"set.h"
@@ -304,21 +309,28 @@
 	<stdio.h>
 	<stdlib.h>
 
-1435876675 /home/thiago/workspace/Repositórios/my_gallaico_game/bosta.h
+1436229104 /home/thiago/workspace/Repositórios/my_gallaico_game/bosta.h
 	"characters.h"
 
-1436082834 source:/home/thiago/workspace/Repositórios/my_gallaico_game/characters.c
+1436229104 source:/home/thiago/workspace/Repositórios/my_gallaico_game/characters.c
 	"characters.h"
 	<stdio.h>
 
-1435995049 /home/thiago/workspace/Repositórios/my_gallaico_game/audio.h
+1436229104 /home/thiago/workspace/Repositórios/my_gallaico_game/audio.h
 
-1436085288 /home/thiago/workspace/Repositórios/my_gallaico_game/trap.h
+1436229104 /home/thiago/workspace/Repositórios/my_gallaico_game/trap.h
 
-1436086009 source:/home/thiago/workspace/Repositórios/my_gallaico_game/trap.c
+1436229104 source:/home/thiago/workspace/Repositórios/my_gallaico_game/trap.c
 	"item.h"
 	"set.h"
 	"jogo2.h"
+	<stdio.h>
+	<stdlib.h>
+
+1436229104 /home/thiago/workspace/Repositórios/my_gallaico_game/stat.h
+
+1436245718 source:/home/thiago/workspace/Repositórios/my_gallaico_game/stat.c
+	"stat.h"
 	<stdio.h>
 	<stdlib.h>
 

@@ -37,6 +37,13 @@ void print_set( void )
     for ( i = 0; i < WIDTH * 2 + 5 ; i++ )
 		printf( WHITE_B " " RESET);
 
+    printf( LEFT_BORDER );
+
+    //for ( i = 0; i < WIDTH + 10; i++ )
+     //   printf( BLUE_B " " RESET);
+     //printf( RED_B "\t\t\t" RESET ); Report
+     //printf( BLUE_B YELLOW "\t" "SCORE:" WHITE " %d" "\t" RESET, get_score() );
+
 	puts("");
 	for ( i = 0; i < HEIGHT; i++ ) {
         printf( LEFT_BORDER WHITE_B "  " RESET " " );
@@ -46,11 +53,14 @@ void print_set( void )
             printf( "%s" "%c" RESET " ", printable->color, printable->body );
 		}
 		printf(  WHITE_B "  " RESET );
+		//printf( LEFT_BORDER  "\033[48;5;8m"  "\t\t\t" RESET  ); Report
 		puts("");
 	}
     printf(  LEFT_BORDER  );
 	for ( i = 0; i < WIDTH * 2 + 5; i++ )
 		printf( WHITE_B " " RESET);
+
+    //printf( LEFT_BORDER RED_B "\t\t\t" RESET ); report
 
 	printf( "\n\n" LEFT_BORDER YELLOW "SCORE:" RESET" %d", get_score() );
 	printf( "\t\t  " "%s" RESET, get_bosta_format() );
@@ -68,6 +78,7 @@ void* handle_set( void *a )
         usleep( 1000000/24 );
     }
     print_set();
+    usleep(1000000);
 
     return NULL;
 }
