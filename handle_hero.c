@@ -43,11 +43,6 @@ int is_hero_dead(void)
     return gallego->dead;
 }
 
-int get_score(void)
-{
-    return gallego->score;
-}
-
 void trying_cagate(void)
 {
    //gallego->flag->trying_cagate = 1;
@@ -61,11 +56,6 @@ void trying_cagate(void)
     }
  //   else
   //    it_was_just_a_little_fart();
-}
-
-void score_up( int score )
-{
-    gallego->score = (int)( gallego->score + score ) < 0 ? 0 : ( gallego->score + score );
 }
 
 char *get_bosta_format( void )

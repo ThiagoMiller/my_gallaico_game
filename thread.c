@@ -79,7 +79,7 @@ void join_threads()
     s = pthread_join( t_coin, &result );
     if ( s != 0 ) error( "Can't join thread for t_coin" );
 
-    clean_up_threads();
+    //clean_up_threads();
 
     /*if ( !is_hero_dead() ) {
 

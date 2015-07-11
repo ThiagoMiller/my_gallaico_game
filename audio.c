@@ -137,7 +137,7 @@ void play_morte()
 {
     result = FMOD_System_PlaySound( fmod_system, morte, 0 ,0 ,NULL );
     fmod_check_errors( result );
-    usleep(1300000);
+    //usleep(1300000);
 }
 
 void play_limite()

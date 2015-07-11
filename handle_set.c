@@ -4,6 +4,7 @@
 #include "clock.h"
 #include "gallego.h"
 #include "audio.h"
+#include "stat.h"
 
 #include <stdio.h>
 #include <unistd.h>
@@ -70,6 +71,22 @@ void print_set( void )
   //if ( is_dead ) game_over();
 }
 
+void game_over()
+{
+    print_set();
+
+    set_trilha_pause();
+    play_morte();
+
+    usleep(2000000);
+
+    print_stat_game();
+
+    play_tonto();
+
+    usleep(1500000);
+}
+
 void* handle_set( void *a )
 {
     while ( !is_hero_dead() ) {
@@ -77,8 +94,8 @@ void* handle_set( void *a )
         update_audio();
         usleep( 1000000/24 );
     }
-    print_set();
-    usleep(1000000);
+
+    game_over();
 
     return NULL;
 }

@@ -7,6 +7,8 @@
 #include "stat.h"
 #include "thread.h"
 
+#include "getch.h" // tentando arrumar Termius...
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -147,6 +149,7 @@ void* handle_monster( void *a )
             veiudo->obj->printable->body = DEAD;
             hero_dead();
             cancel_hero_thread();
+            resetTermios(); /* Reseta terminal, pois este não tem mais como o ser através de hero_thread */
         }
         else if ( destiny->layer1 != NULL ) {
             switch ( destiny->layer1->body ) {

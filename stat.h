@@ -3,6 +3,7 @@
 
 typedef struct {
     char how_long[9];
+    unsigned int score;
     unsigned int eat;
     unsigned int coin;
     unsigned int cagate;
@@ -19,6 +20,9 @@ typedef struct {
 
 stat_game *create_stat_game( void );
 void init_stat_game( void );
+void print_stat_game( void );
+void score_up( int  );
+int get_score( void );
 
 
 

@@ -94,7 +94,7 @@ int main()
     }
 
     release_menu_audio();
-    resetTermios();
+    //resetTermios();
 
     printf( CLEAN );
 
