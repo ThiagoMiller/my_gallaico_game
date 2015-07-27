@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-stat_game *stat;
+//stat_game *stat;
 
 void print_stat_game( void )
 {

@@ -1,9 +1,11 @@
 #include "thread.h"
-#include "gallego.h"
-#include "veiudo.h"
-#include "set.h"
+
+#include "handle_hero.h"
+#include "handle_monster.h"
+#include "handle_set.h"
+#include "handle_coin.h"
+#include "handle_fruits.h"
 #include "clock.h"
-#include "item.h"
 
 #include <stdio.h>
 #include <stdlib.h>

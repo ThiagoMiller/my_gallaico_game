@@ -18,9 +18,6 @@ typedef struct {
 
 monster *create_monster( pos* );
 
-void init_monster( void );
-void* handle_monster( void* );
-pos get_monster_pos( void );
 
 
 #endif // MONSTER_H

@@ -18,6 +18,8 @@ typedef struct {
     unsigned int provocate;
 } stat_game;
 
+extern stat_game *stat;
+
 stat_game *create_stat_game( void );
 void init_stat_game( void );
 void print_stat_game( void );

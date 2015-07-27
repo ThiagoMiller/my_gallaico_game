@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-extern char *state_color[];
+//extern char *state_color[];
 
 monster *create_monster( pos *pos )
 {

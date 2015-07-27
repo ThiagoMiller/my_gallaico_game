@@ -1,8 +1,8 @@
-#include "set.h"
+#include "handle_set.h"
 #include "thread.h"
 #include "jogo2.h"
+#include "handle_hero.h"
 #include "clock.h"
-#include "gallego.h"
 #include "audio.h"
 #include "stat.h"
 

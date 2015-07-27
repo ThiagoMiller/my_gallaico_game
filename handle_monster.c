@@ -1,6 +1,7 @@
-#include "veiudo.h"
-#include "gallego.h"
-#include "set.h"
+#include "handle_monster.h"
+
+#include "handle_hero.h"
+#include "handle_set.h"
 #include "jogo2.h"
 #include "item.h"
 #include "audio.h"
@@ -17,8 +18,8 @@
 #define WAIT  1700000 // 1,7 seg
 #define DELAY 450000 // 0,45 segs
 
-extern char *state_color[];
-extern stat_game *stat;
+//extern char *state_color[];
+//extern stat_game *stat;
 
 monster *veiudo;
 

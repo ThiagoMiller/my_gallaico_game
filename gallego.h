@@ -26,13 +26,7 @@ typedef struct {
 
 
 hero *create_hero( pos* );
-void* handle_hero( void* );
-void init_hero( void );
-pos get_hero_pos( void );
-void hero_dead( void );
-int is_hero_dead(void);
-int get_score(void);
-void score_up( int );
-char *get_bosta_format( void );
+
+
 
 #endif // HERO_H

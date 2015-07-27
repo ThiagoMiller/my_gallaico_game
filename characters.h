@@ -84,5 +84,7 @@ enum state {
     TRY_GO_OUT_TRAP
 };
 
+extern char *state_color[];
+
 
 #endif // CHARACTERS_H

@@ -1,5 +1,4 @@
 #include "clock.h"
-#include "gallego.h"
 
 #include <stdio.h>
 #include <unistd.h>

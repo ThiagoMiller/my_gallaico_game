@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-extern char *state_color[];
+//extern char *state_color[];
 
 hero *create_hero( pos *pos )
 {

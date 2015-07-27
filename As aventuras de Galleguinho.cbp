@@ -63,18 +63,23 @@
 		<Unit filename="handle_coin.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="handle_coin.h" />
 		<Unit filename="handle_fruits.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="handle_fruits.h" />
 		<Unit filename="handle_hero.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="handle_hero.h" />
 		<Unit filename="handle_monster.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="handle_monster.h" />
 		<Unit filename="handle_set.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="handle_set.h" />
 		<Unit filename="item.c">
 			<Option compilerVar="CC" />
 		</Unit>

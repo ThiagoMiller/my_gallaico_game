@@ -1,9 +1,12 @@
-#include "gallego.h"
-#include "veiudo.h"
+#include "handle_hero.h"
+
 #include "jogo2.h"
-#include "set.h"
 #include "getch.h"
 #include "bosta.h"
+#include "handle_monster.h"
+#include "handle_coin.h"
+#include "handle_fruits.h"
+#include "handle_set.h"
 #include "item.h"
 #include "trap.h"
 #include "audio.h"
@@ -14,18 +17,20 @@
 #include <string.h>
 #include <unistd.h>
 
-extern char *state_color[];
-extern stat_game *stat;
+#define type( obj ) \
+    ( obj == FRUIT ? 0 : obj == COIN ? 1 : obj == BOSTA ? 2 : obj == L_BOSTA ? 3 : 4 )
+
+//extern char *state_color[];
+//extern stat_game *stat;
+
 
 static hero *gallego;
 
 
-char *bosta_power[] = {
-    "\033[48;5;8m" " B O S T A ",
-    BROWN_B " B O" "\033[48;5;8m" " S T A ",
-    BROWN_B " B O S " "\033[48;5;8m" "T A ",
-    BROWN_B " B O S T A "
+static void ( *effect_action[] )( cell *destiny ) = {
+    found_fruit, found_coin, found_big_bosta, found_little_bosta, found_trap
 };
+
 
 pos get_hero_pos( void )
 {
@@ -60,6 +65,13 @@ void trying_cagate(void)
 
 char *get_bosta_format( void )
 {
+    static char *bosta_power[] = {
+        "\033[48;5;8m" " B O S T A ",
+        BROWN_B " B O" "\033[48;5;8m" " S T A ",
+        BROWN_B " B O S " "\033[48;5;8m" "T A ",
+        BROWN_B " B O S T A "
+    };
+
     return bosta_power[ gallego->eated_fruts ];
 }
 
@@ -117,6 +129,54 @@ int is_hero_limpping(void)
 }
 
 */
+
+/*********************************************************************************************/
+
+void found_fruit( cell *destiny )
+{
+    if ( gallego->eated_fruts < 3 )
+        gallego->eated_fruts++;
+    score_up( 1 );
+    stat->eat++;
+    clean_item( destiny );
+}
+
+void found_coin( cell *destiny )
+{
+    score_up( 3 );
+    stat->coin++;
+    clean_item( destiny );
+    play_action_moeda();
+}
+
+void found_big_bosta( cell *destiny  )
+{
+    down_bosta( destiny->layer1 );
+    score_up( -2 );
+    stat->hero_step_big_shit++;
+    gallego->obj->printable->color = state_color[CAGATED_COLOR];
+    gallego->cagated = 1;
+}
+
+void found_little_bosta( cell *destiny  )
+{
+    score_up( -1 );
+    stat->hero_step_in_small_shit++;
+    gallego->obj->printable->color = state_color[CAGATED_COLOR];
+    gallego->cagated = 1;
+    clean_item( destiny );
+}
+
+void found_trap( cell *destiny  )
+{
+    score_up( -10 );
+    stat->trap++;
+    gallego->trapped = 1;
+    gallego->obj->printable->color = state_color[TRAPPED_COLOR];
+}
+
+/********************************************************************************************/
+
 void maybe_gallego_is_limpping( void )
 {
     if ( gallego->trapped ) return;
@@ -157,7 +217,12 @@ static void move( pos *next_pos )
             hero_dead();
         }
         else if ( destiny->layer1 != NULL ) {
-            switch ( destiny->layer1->body ) {
+            //switch ( destiny->layer1->body ) {
+
+            ( *effect_action[ type( destiny->layer1->body ) ] )( destiny );
+
+
+            /*
             case FRUIT :
                 if ( gallego->eated_fruts < 3 )
                     gallego->eated_fruts++;
@@ -190,7 +255,8 @@ static void move( pos *next_pos )
                 stat->trap++;
                 gallego->trapped = 1;
                 gallego->obj->printable->color = state_color[TRAPPED_COLOR];
-            }
+
+            } */
         }
            /* if ( destiny->layer1->body == FRUIT ) {
                 if ( gallego->eated_fruts < 3 )
@@ -304,7 +370,7 @@ void* handle_hero( void *a )
 {
     pos next_pos = get_hero_pos();
     int direction = 0;
-    while ( direction != 'q' && !is_hero_dead() ) {
+    while ( direction != 'q' ) {
         direction = getch();
         switch( direction ) {
             case 'w' :

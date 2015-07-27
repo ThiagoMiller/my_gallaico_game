@@ -1,5 +1,8 @@
 #include "item.h"
 
+#include "handle_coin.h"
+#include "handle_fruits.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
